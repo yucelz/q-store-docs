@@ -1,40 +1,129 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
-template: splash # Remove or comment out this line to display the site sidebar on this page.
-hero:
-  tagline: Congrats on setting up a new Starlight project!
-  image:
-    file: ../../assets/houston.webp
-  actions:
-    - text: Example Guide
-      link: /guides/example/
-      icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
-      icon: external
-      variant: minimal
+title: Q-Store - Quantum-Native Database
+description: A novel database architecture leveraging quantum mechanical properties for exponential performance advantages
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## Next steps
+# Quantum-Native Database Architecture
 
-<CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
-	</Card>
-	<Card title="Change page layout" icon="document">
-		Delete `template: splash` in `src/content/docs/index.mdx` to display a
-		sidebar on this page.
-	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
-	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
-	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
-	</Card>
+Q-Store is a novel database architecture that leverages quantum mechanical properties—**superposition**, **entanglement**, **decoherence**, and **tunneling**—as core features rather than obstacles.
+
+## Key Innovation
+
+Instead of fighting quantum mechanics, we design the data infrastructure to **exploit quantum properties** for performance gains impossible with classical systems.
+
+## Core Benefits
+
+<CardGrid>
+  <Card title="Exponential Speedup" icon="rocket">
+    O(√N) vs O(N) search complexity through quantum algorithms
+  </Card>
+  <Card title="Context-Aware Storage" icon="star">
+    Multiple interpretations in superposition, collapsed by query context
+  </Card>
+  <Card title="Zero-Latency Updates" icon="setting">
+    Entangled relationships propagate changes automatically
+  </Card>
+  <Card title="Adaptive Memory" icon="approve-check">
+    Physics-based relevance decay through decoherence
+  </Card>
 </CardGrid>
+
+## Applications
+
+Q-Store provides exponential advantages for:
+
+- **Vector Similarity Search**: Semantic search, embeddings, recommendations
+- **Financial Services**: Portfolio correlation, crisis detection, risk analysis
+- **ML Model Training**: Training data selection, hyperparameter optimization
+- **Scientific Computing**: Molecular similarity, drug discovery, materials science
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                   Application Layer                          │
+│  (Finance, ML Training, Recommendations, Scientific)         │
+└────────────────────┬────────────────────────────────────────┘
+                     │
+┌────────────────────▼────────────────────────────────────────┐
+│              Quantum Database API                            │
+│  • Query Interface  • Measurement Control  • Entanglement    │
+└────────────────────┬────────────────────────────────────────┘
+                     │
+        ┌────────────┴────────────┐
+        │                         │
+┌───────▼──────────┐    ┌────────▼──────────┐
+│  Classical Store │    │  Quantum Processor │
+│  (Bulk Storage)  │    │   (Active Memory)  │
+│                  │    │                    │
+│  • Pinecone      │◄──►│  • IonQ Quantum    │
+│  • pgvector      │    │  • State Manager   │
+│  • Qdrant        │    │  • Circuit Builder │
+└──────────────────┘    └───────────────────┘
+```
+
+## Quick Example
+
+```python
+from quantum_db import QuantumDatabase
+
+# Initialize database
+db = QuantumDatabase(
+    classical_backend='pinecone',
+    quantum_backend='ionq',
+    api_key=IONQ_API_KEY
+)
+
+# Insert with superposition (multiple contexts)
+db.insert(
+    id='doc_123',
+    vector=embedding,
+    contexts=[
+        ('normal_query', 0.7),
+        ('technical_query', 0.2),
+        ('historical_query', 0.1)
+    ]
+)
+
+# Query with quantum advantages
+results = db.query(
+    vector=query_embedding,
+    context='technical_query',
+    enable_tunneling=True,
+    top_k=10
+)
+```
+
+## Performance Characteristics
+
+| Operation | Classical | Quantum | Speedup |
+|-----------|-----------|---------|---------|
+| Vector Search | O(N) | O(√N) | Quadratic |
+| Pattern Discovery | O(N·M) | O(√(N·M)) | Quadratic |
+| Correlation Updates | O(K²) | O(1) | K² (entanglement) |
+| Storage Compression | N vectors | log₂(N) qubits | Exponential |
+
+## Next Steps
+
+<CardGrid>
+  <Card title="Quick Start" icon="rocket">
+    [Get started](/getting-started/quick-start) with Q-Store in minutes
+  </Card>
+  <Card title="Core Concepts" icon="open-book">
+    Learn about [quantum principles](/concepts/quantum-principles) in databases
+  </Card>
+  <Card title="API Reference" icon="document">
+    Explore the [Core API](/api/core) documentation
+  </Card>
+  <Card title="Production Guide" icon="setting">
+    Deploy with [production patterns](/production/connection-pooling)
+  </Card>
+</CardGrid>
+
+## Version Information
+
+- **v1.0**: Core quantum database features
+- **v2.0**: Production-ready patterns, connection pooling, monitoring
+
