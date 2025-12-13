@@ -9,7 +9,7 @@ export default defineConfig({
   integrations: [
       starlight({
           title: 'Q-Store',
-          description: 'Quantum-Native Database Architecture Documentation',
+          description: 'Q-Store Database Architecture Documentation',
           logo: {
               src: './src/assets/logo.svg',
           },
