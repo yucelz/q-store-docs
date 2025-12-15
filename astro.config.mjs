@@ -69,6 +69,13 @@ export default defineConfig({
                       { label: 'ML Training Performance', slug: 'advanced/ml-training-performance' },
                   ],
               },
+              {
+                  label: 'Project Info',
+                  items: [
+                      { label: 'License', slug: 'license' },
+                      { label: 'Contact', slug: 'contact' },
+                  ],
+              },
           ],
       }),
 	],
