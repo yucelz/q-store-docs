@@ -519,9 +519,9 @@ If you use this quantum ML training framework in your research, please cite:
 ```bibtex
 @software{quantum_db_v32,
   title={Quantum-Native Database Architecture v3.2},
-  author={Your Name},
-  year={2024},
-  url={https://github.com/yourrepo/quantum-db}
+  author={Yucel Zengin},
+  year={2025},
+  url={https://github.com/yucelz/q-store}
 }
 ```
 
@@ -535,10 +535,5 @@ If you use this quantum ML training framework in your research, please cite:
 
 ---
 
-## 📄 License
-
-Apache 2.0
-
----
 
 **Built with ❤️ for quantum-accelerated machine learning**
