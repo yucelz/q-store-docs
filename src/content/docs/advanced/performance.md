@@ -1,6 +1,6 @@
 ---
-title: Performance Optimization
-description: Performance characteristics and optimization strategies for Q-Store
+title: Database Performance
+description: Performance characteristics and optimization strategies for Q-Store database operations
 ---
 
 ## Theoretical Complexity
@@ -15,17 +15,11 @@ Q-Store achieves exponential advantages through quantum algorithms:
 | **Correlation Updates** | O(K²) | O(1) | K² (entanglement) |
 | **Storage Compression** | N vectors | log₂(N) qubits | Exponential |
 
+> For ML Training performance metrics, see [ML Training Performance](/advanced/ml-training-performance)
+
 ## Empirical Benchmarks
 
-Based on IonQ research + Q-Store enhancements:
-
-### Training Convergence
-
-| System | Epochs | Convergence Rate |
-|--------|--------|------------------|
-| Classical GAN | 20,000 | 40% |
-| IonQ Quantum GAN | 1,000 | ~75% |
-| **Q-Store Enhanced** | **50** | **>90%** |
+Based on Q-Store database operations:
 
 ### Query Latency
 
@@ -312,15 +306,22 @@ Overall: ✅ All benchmarks passed
 ## Best Practices Summary
 
 1. **Classical first, quantum refinement**: Filter 99%+ classically
+
 2. **Enable caching**: Circuit and result caching
+
 3. **Batch operations**: Combine multiple ops
+
 4. **Tune coherence**: Match data access patterns
+
 5. **Monitor metrics**: Track performance continuously
+
 6. **Smart routing**: Quantum only when beneficial
+
 7. **Use simulator**: Free for dev/test
 
 ## Next Steps
 
-- Configure [Cost Optimization](/advanced/cost-optimization)
+- Learn about [ML Training Performance](/advanced/ml-training-performance)
+- Learn about [Q-Store v3.2 ML Features](/getting-started/version-3-2)
 - Set up [Monitoring](/production/monitoring)
-- Review [Testing Strategy](/advanced/testing)
+- Review [Quantum Principles](/concepts/quantum-principles)

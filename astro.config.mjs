@@ -23,6 +23,7 @@ export default defineConfig({
                       { label: 'Introduction', slug: 'index' },
                       { label: 'Quick Start', slug: 'getting-started/quick-start' },
                       { label: 'Installation', slug: 'getting-started/installation' },
+                      { label: 'Q-Store v3.2', slug: 'getting-started/version-3-2' },
                   ],
               },
               {
@@ -64,7 +65,8 @@ export default defineConfig({
               {
                   label: 'Advanced Topics',
                   items: [
-                      { label: 'Performance', slug: 'advanced/performance' },
+                      { label: 'Database Performance', slug: 'advanced/performance' },
+                      { label: 'ML Training Performance', slug: 'advanced/ml-training-performance' },
                   ],
               },
           ],
