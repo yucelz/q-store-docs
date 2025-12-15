@@ -1,16 +1,18 @@
 ---
 title: Entanglement Registry
-description: Component managing entangled quantum states and correlations
+description: Component managing entangled quantum states and feature correlations
 ---
 
-The **Entanglement Registry** tracks and manages entangled groups of related entities, enabling automatic correlation updates.
+The **Entanglement Registry** tracks and manages entangled groups of related entities, enabling automatic correlation updates and quantum feature learning in v3.2.
 
 ## Responsibilities
 
-- Track entangled groups of related entities
+- Track entangled groups of related entities and features
 - Create entangled quantum states (GHZ, Bell pairs)
 - Propagate updates via quantum correlation
-- Measure entanglement strength (correlation)
+- Measure entanglement strength and feature correlations
+- Support quantum regularization using entanglement (NEW in v3.2)
+- Enable quantum data augmentation via entanglement (NEW in v3.2)
 
 ## Key Methods
 
@@ -18,60 +20,72 @@ The **Entanglement Registry** tracks and manages entangled groups of related ent
 
 Creates an entangled group of related entities.
 
+**Function Signature:**
 ```python
 create_entangled_group(
     group_id: str,
     entity_ids: List[str],
-    correlation_strength: float = 0.8
+    correlation_strength: float = 0.8,
+    entanglement_type: str = 'GHZ'
 ) -> EntanglementGroup
 ```
 
-**Example:**
+**Purpose:** Create quantum entanglement between related entities for automatic correlation propagation.
 
+---
+
+### create_feature_entanglement()
+
+Creates entangled quantum features for ML (NEW in v3.2).
+
+**Function Signature:**
 ```python
-# Create entangled portfolio
-registry.create_entangled_group(
-    group_id='tech_stocks',
-    entity_ids=['AAPL', 'MSFT', 'GOOGL'],
-    correlation_strength=0.85
-)
+create_feature_entanglement(
+    feature_ids: List[str],
+    entanglement_pattern: str = 'linear'
+) -> QuantumCircuit
 ```
+
+**Purpose:** Generate entangled feature representations for quantum neural networks.
+
+---
 
 ### update_entity()
 
 Updates an entity and propagates via entanglement.
 
+**Function Signature:**
 ```python
 update_entity(
     entity_id: str,
-    new_data: Vector
+    new_data: np.ndarray
 ) -> None
 ```
 
-**Automatic Propagation:**
+**Purpose:** Update one entity and automatically propagate changes to entangled partners via quantum correlation.
 
-```python
-# Update AAPL
-registry.update_entity('AAPL', new_embedding)
-
-# MSFT and GOOGL automatically updated via quantum correlation
-# No manual sync needed!
-```
+---
 
 ### get_entangled_partners()
 
 Returns all entities entangled with given entity.
 
+**Function Signature:**
 ```python
 get_entangled_partners(
     entity_id: str
 ) -> List[str]
 ```
 
+**Purpose:** Retrieve all entities in the same entanglement group.
+
+---
+
 ### measure_correlation()
 
 Measures correlation strength between two entities.
 
+**Function Signature:**
 ```python
 measure_correlation(
     entity_a: str,
@@ -79,95 +93,132 @@ measure_correlation(
 ) -> float
 ```
 
-Returns correlation value 0-1.
+**Purpose:** Compute quantum correlation (returns value 0-1) between entangled entities.
+
+---
+
+### compute_entanglement_entropy()
+
+Computes entanglement entropy for regularization (NEW in v3.2).
+
+**Function Signature:**
+```python
+compute_entanglement_entropy(
+    group_id: str
+) -> float
+```
+
+**Purpose:** Calculate entanglement entropy for quantum regularization in ML training.
+
+---
+
+### break_entanglement()
+
+Breaks entanglement between entities.
+
+**Function Signature:**
+```python
+break_entanglement(
+    group_id: str
+) -> None
+```
+
+**Purpose:** Dissolve an entanglement group and remove quantum correlations.
+
+---
+
+### get_entangled_groups()
+
+Returns all active entanglement groups.
+
+**Function Signature:**
+```python
+get_entangled_groups() -> Dict[str, EntanglementGroup]
+```
+
+**Purpose:** Retrieve all currently tracked entanglement groups.
+
+---
 
 ## Entangled States
 
-### GHZ State
+### GHZ State (Multi-party Entanglement)
 
 Multi-party entanglement for N entities:
-
 ```
 |GHZ⟩ = 1/√2(|000...0⟩ + |111...1⟩)
 ```
 
-Used for groups with uniform correlation.
+**Use Cases:**
+- Groups with uniform correlation
+- Portfolio optimization
+- Multi-feature entanglement in ML
 
-### Bell Pairs
+### Bell Pairs (Two-party Entanglement)
 
 Two-party entanglement:
-
 ```
 |Φ⁺⟩ = 1/√2(|00⟩ + |11⟩)
 ```
 
-Used for pairwise correlations.
+**Use Cases:**
+- Pairwise correlations
+- Feature pair learning
+- Binary relationship tracking
 
-## Implementation
+### Linear Entanglement (Chain Pattern)
 
-```python
-class EntanglementRegistry:
-    def __init__(self):
-        self.groups: Dict[str, EntanglementGroup] = {}
-        self.entity_to_groups: Dict[str, Set[str]] = {}
-    
-    def create_entangled_group(
-        self,
-        group_id: str,
-        entity_ids: List[str],
-        correlation_strength: float = 0.8
-    ) -> EntanglementGroup:
-        # Create quantum state
-        quantum_state = self._create_ghz_state(
-            entity_ids,
-            correlation_strength
-        )
-        
-        # Register group
-        group = EntanglementGroup(
-            id=group_id,
-            entities=entity_ids,
-            quantum_state=quantum_state,
-            correlation=correlation_strength
-        )
-        
-        self.groups[group_id] = group
-        
-        # Update entity mappings
-        for entity_id in entity_ids:
-            if entity_id not in self.entity_to_groups:
-                self.entity_to_groups[entity_id] = set()
-            self.entity_to_groups[entity_id].add(group_id)
-        
-        return group
-    
-    def _create_ghz_state(
-        self,
-        entity_ids: List[str],
-        correlation: float
-    ) -> QuantumState:
-        # Build GHZ circuit
-        n_entities = len(entity_ids)
-        qubits = cirq.LineQubit.range(n_entities)
-        circuit = cirq.Circuit()
-        
-        # Hadamard on first qubit
-        circuit.append(cirq.H(qubits[0]))
-        
-        # CNOTs to entangle all
-        for i in range(n_entities - 1):
-            circuit.append(cirq.CNOT(qubits[i], qubits[i + 1]))
-        
-        # Apply correlation strength
-        rotation_angle = np.arccos(correlation)
-        for qubit in qubits:
-            circuit.append(cirq.ry(rotation_angle)(qubit))
-        
-        return QuantumState(circuit=circuit, qubits=qubits)
+Sequential entanglement pattern for quantum circuits:
 ```
+Qubit 0 ←→ Qubit 1 ←→ Qubit 2 ←→ ... ←→ Qubit N
+```
+
+**Use Cases:**
+- Quantum convolutional layers
+- Sequential feature processing
+- Scalable circuit design
+
+### Circular Entanglement (Ring Pattern)
+
+Circular entanglement with wrap-around:
+```
+Qubit 0 ←→ Qubit 1 ←→ ... ←→ Qubit N ←→ Qubit 0
+```
+
+**Use Cases:**
+- Periodic boundary conditions
+- Symmetric feature representations
+
+### Full Entanglement (All-to-All)
+
+Complete entanglement graph:
+```
+Every qubit pair is entangled
+```
+
+**Use Cases:**
+- Maximum expressivity quantum circuits
+- Dense feature interactions
+- Small-scale models (limited qubits)
+
+## ML Training Integration (v3.2)
+
+### Quantum Regularization
+
+Entanglement entropy can be used as a regularization term:
+- Encourages quantum correlations in learned features
+- Prevents overfitting to classical patterns
+- Enables unique quantum advantages
+
+### Feature Learning
+
+Entangled features learn correlated representations:
+- Automatic feature interaction discovery
+- Reduced parameter space via entanglement
+- Improved generalization
 
 ## Next Steps
 
 - See [Quantum Circuit Builder](/components/circuit-builder)
 - Learn about [Tunneling Engine](/components/tunneling-engine)
-- Check [Classical Backend](/components/classical-backend)
+- Explore [ML Model Training](/applications/ml-training)

@@ -166,19 +166,6 @@ db = QuantumDatabase(
 )
 ```
 
-## Scaling Strategy
-
-### Current Scale (2025)
-- Classical: Billions of vectors
-- Quantum: 100-1,000 hot vectors
-- Hybrid: Best performance at scale
-
-### Future Scale (2030+)
-As quantum hardware improves:
-- More qubits → more quantum storage
-- Better coherence → longer persistence
-- Error correction → higher reliability
-- Lower costs → broader adoption
 
 ### Migration Path
 

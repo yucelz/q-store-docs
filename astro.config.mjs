@@ -48,8 +48,6 @@ export default defineConfig({
                   items: [
                       { label: 'Overview', slug: 'ionq/overview' },
                       { label: 'SDK Integration', slug: 'ionq/sdk-integration' },
-                      { label: 'Hardware Selection', slug: 'ionq/hardware-selection' },
-                      { label: 'Optimizations', slug: 'ionq/optimizations' },
                   ],
               },
               {
@@ -61,38 +59,12 @@ export default defineConfig({
                       { label: 'Scientific Computing', slug: 'applications/scientific' },
                   ],
               },
-              {
-                  label: 'Production Patterns (v2.0)',
-                  items: [
-                      { label: 'Connection Pooling', slug: 'production/connection-pooling' },
-                      { label: 'Transactions', slug: 'production/transactions' },
-                      { label: 'Batch Operations', slug: 'production/batch-operations' },
-                      { label: 'Error Handling', slug: 'production/error-handling' },
-                      { label: 'Monitoring', slug: 'production/monitoring' },
-                  ],
-              },
-              {
-                  label: 'API Reference',
-                  items: [
-                      { label: 'Core API', slug: 'api/core' },
-                      { label: 'REST API', slug: 'api/rest' },
-                      { label: 'Python SDK', slug: 'api/python-sdk' },
-                  ],
-              },
-              {
-                  label: 'Deployment',
-                  items: [
-                      { label: 'Cloud Deployment', slug: 'deployment/cloud' },
-                      { label: 'Kubernetes', slug: 'deployment/kubernetes' },
-                      { label: 'Migration Guide', slug: 'deployment/migration' },
-                  ],
-              },
+
+
               {
                   label: 'Advanced Topics',
                   items: [
                       { label: 'Performance', slug: 'advanced/performance' },
-                      { label: 'Cost Optimization', slug: 'advanced/cost-optimization' },
-                      { label: 'Testing Strategy', slug: 'advanced/testing' },
                   ],
               },
           ],

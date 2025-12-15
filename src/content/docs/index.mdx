@@ -39,30 +39,6 @@ Q-Store provides exponential advantages for:
 - **ML Model Training**: Training data selection, hyperparameter optimization
 - **Scientific Computing**: Molecular similarity, drug discovery, materials science
 
-## Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                   Application Layer                          │
-│  (Finance, ML Training, Recommendations, Scientific)         │
-└────────────────────┬────────────────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────────────────┐
-│              Quantum Database API                            │
-│  • Query Interface  • Measurement Control  • Entanglement    │
-└────────────────────┬────────────────────────────────────────┘
-                     │
-        ┌────────────┴────────────┐
-        │                         │
-┌───────▼──────────┐    ┌────────▼──────────┐
-│  Classical Store │    │  Quantum Processor │
-│  (Bulk Storage)  │    │   (Active Memory)  │
-│                  │    │                    │
-│  • Pinecone      │◄──►│  • IonQ Quantum    │
-│  • pgvector      │    │  • State Manager   │
-│  • Qdrant        │    │  • Circuit Builder │
-└──────────────────┘    └───────────────────┘
-```
 
 ## Quick Example
 
