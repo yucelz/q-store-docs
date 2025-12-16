@@ -23,6 +23,7 @@ export default defineConfig({
                       { label: 'Introduction', slug: 'index' },
                       { label: 'Quick Start', slug: 'getting-started/quick-start' },
                       { label: 'Installation', slug: 'getting-started/installation' },
+                      { label: 'Q-Store v3.3', slug: 'getting-started/version-3-3' },
                       { label: 'Q-Store v3.2', slug: 'getting-started/version-3-2' },
                   ],
               },
