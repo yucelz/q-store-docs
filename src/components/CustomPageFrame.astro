@@ -6,6 +6,7 @@ import CookieBanner from './CookieBanner.astro';
 const GA_ID = import.meta.env.PUBLIC_GA_ID;
 ---
 
-<Default {...Astro.props}><slot /></Default>
-
-{GA_ID && <CookieBanner />}
+<Default {...Astro.props}>
+  <slot />
+  {GA_ID && <CookieBanner />}
+</Default>
