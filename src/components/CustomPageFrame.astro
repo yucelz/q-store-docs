@@ -1,14 +1,10 @@
 ---
 import type { Props } from '@astrojs/starlight/props';
 import Default from '@astrojs/starlight/components/PageFrame.astro';
-import CookieBanner from './CookieBanner.astro';
-
-const GA_ID = import.meta.env.PUBLIC_GA_ID;
 ---
 
 <Default {...Astro.props}>
   <slot name="header" slot="header" />
   <slot name="sidebar" slot="sidebar" />
   <slot />
-  {GA_ID && <CookieBanner />}
 </Default>
