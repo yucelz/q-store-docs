@@ -21,6 +21,7 @@ export default defineConfig({
       components: {
         Head: './src/components/CustomHead.astro',
         Footer: './src/components/CustomFooter.astro',
+        PageFrame: './src/components/CustomPageFrame.astro',
       },
       sidebar: [
           {
