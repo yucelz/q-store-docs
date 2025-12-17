@@ -535,5 +535,3 @@ If you use this quantum ML training framework in your research, please cite:
 
 ---
 
-
-**Built with ❤️ for quantum-accelerated machine learning**
