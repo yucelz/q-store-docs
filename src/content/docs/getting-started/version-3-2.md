@@ -1,7 +1,11 @@
 ---
-title: Q-Store v3.2
+title: Q-Store v3.2 (Retired)
 description: Complete ML Training Capabilities for Quantum-Native Database
 ---
+
+:::caution[Retired Version]
+This version is retired. Please upgrade to [v3.4](/getting-started/version-3-4) for 8-10x better performance and production-ready optimizations.
+:::
 
 ## Overview
 

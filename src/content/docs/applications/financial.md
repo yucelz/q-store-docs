@@ -245,16 +245,6 @@ finance_db = QuantumDatabase(
 )
 ```
 
-### Cost Example
-
-**Portfolio of 1000 stocks, 10K queries/day:**
-
-- Classical only: ~$100/month (Pinecone)
-- + Quantum (10% of queries): ~$300/month (IonQ simulator free, Aria $0.30/circuit)
-- **Total: ~$400/month for quantum advantages**
-
-**Value:** Early detection of one crisis event = millions saved
-
 ## Next Steps
 
 - See [ML Training Applications](/applications/ml-training)
