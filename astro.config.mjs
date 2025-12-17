@@ -20,6 +20,7 @@ export default defineConfig({
       ],
       components: {
         Head: './src/components/CustomHead.astro',
+        PageFrame: './src/components/CustomPageFrame.astro',
       },
       sidebar: [
           {

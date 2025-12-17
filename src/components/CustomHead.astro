@@ -1,6 +1,7 @@
 ---
 import type { Props } from '@astrojs/starlight/props';
 import StarlightHead from '@astrojs/starlight/components/Head.astro';
+import GADefaultConsent from './GADefaultConsent.astro';
 
 const GA_ID = import.meta.env.PUBLIC_GA_ID;
 ---
@@ -9,6 +10,9 @@ const GA_ID = import.meta.env.PUBLIC_GA_ID;
 
 {GA_ID && (
   <>
+    <!-- Set default consent to DENIED (GDPR compliant) -->
+    <GADefaultConsent />
+    
     <!-- Load GA via Partytown -->
     <script
       type="text/partytown"

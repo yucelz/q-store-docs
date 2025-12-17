@@ -1,0 +1,76 @@
+<style>
+  .cookie-banner {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    max-width: 420px;
+    margin: auto;
+    padding: 1rem;
+    background: #111;
+    color: #fff;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.3);
+    z-index: 9999;
+    font-size: 0.9rem;
+  }
+
+  .cookie-actions {
+    display: flex;
+    gap: .5rem;
+    margin-top: .75rem;
+  }
+
+  button {
+    flex: 1;
+    padding: .5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .accept { background: #4ade80; }
+  .reject { background: #374151; color: white; }
+</style>
+
+<div id="cookie-banner" class="cookie-banner" hidden>
+  <strong>Cookies</strong>
+  <p>
+    We use cookies to understand how this site is used.
+  </p>
+
+  <div class="cookie-actions">
+    <button class="accept" id="accept">Accept</button>
+    <button class="reject" id="reject">Reject</button>
+  </div>
+</div>
+
+<script is:inline>
+  const STORAGE_KEY = 'cookie-consent';
+
+  const banner = document.getElementById('cookie-banner');
+  const saved = localStorage.getItem(STORAGE_KEY);
+
+  if (!saved) {
+    banner.hidden = false;
+  }
+
+  function setConsent(granted) {
+    window.gtag?.('consent', 'update', {
+      analytics_storage: granted ? 'granted' : 'denied',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+    });
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      granted ? 'accepted' : 'rejected'
+    );
+
+    banner.hidden = true;
+  }
+
+  document.getElementById('accept').onclick = () => setConsent(true);
+  document.getElementById('reject').onclick = () => setConsent(false);
+</script>
