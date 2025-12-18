@@ -8,10 +8,11 @@ description: Installation guide for Q-Store quantum database
 - Python 3.9+
 - IonQ API key (get from [cloud.ionq.com](https://cloud.ionq.com))
 - Classical backend credentials (Pinecone, pgvector, or Qdrant)
+- Optional: GPU for local quantum simulation acceleration
 
 ## Install via pip
 
-### Latest Version (v3.4.3 - Recommended)
+### Latest Version (v3.5.0 - Recommended)
 
 ```bash
 pip install q-store
@@ -20,17 +21,8 @@ pip install q-store
 ### Specific Version
 
 ```bash
-pip install q-store==3.4.3
+pip install q-store==3.5.0
 ```
-
-**What's New in v3.4.3**:
-- 8-10x faster training through true parallelization
-- Native IonQ gate compilation (GPi/GPi2/MS)
-- Smart circuit caching with template-based optimization
-- Connection pooling for reduced API overhead
-- Production-ready with sub-60s training epochs
-
-
 
 ## Setup IonQ Access
 
@@ -88,62 +80,6 @@ db = QuantumDatabase(
     }
 )
 ```
-
-## Verify Installation
-
-```python
-from q_store.ml import QuantumTrainer, TrainingConfig
-
-# Test v3.4 installation
-config = TrainingConfig(
-    quantum_sdk='ionq',
-    quantum_api_key='your-ionq-key',
-    quantum_target='simulator',  # Free simulator
-    
-    # v3.4 features
-    enable_all_v34_features=True
-)
-
-print(f"Q-Store v3.4.3 installed successfully!")
-print(f"Features enabled: Batch API, Native Gates, Smart Caching")
-```
-
-### Test ML Training (v3.4)
-
-```python
-import asyncio
-from q_store.ml import QuantumTrainer, TrainingConfig, QuantumModel
-
-async def test_training():
-    config = TrainingConfig(
-        pinecone_api_key='your-pinecone-key',
-        quantum_sdk='ionq',
-        quantum_api_key='your-ionq-key',
-        quantum_target='simulator',
-        
-        # v3.4 optimizations
-        use_batch_api=True,
-        use_native_gates=True,
-        enable_smart_caching=True,
-        
-        batch_size=5,
-        epochs=1
-    )
-    
-    # Create simple model
-    model = QuantumModel(
-        input_dim=4,
-        n_qubits=4,
-        output_dim=2
-    )
-    
-    print("Training with v3.4 optimizations...")
-    # Training would go here with real data
-    print("Installation verified! Ready for production.")
-
-asyncio.run(test_training())
-```
-
 
 ## Troubleshooting
 

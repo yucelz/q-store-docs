@@ -351,23 +351,6 @@ config = TrainingConfig(
 - ✅ Dynamic optimization based on queue depth
 - ✅ Batch time reduced from 5s to 4s
 
-## Future Roadmap
-
-### v3.5: Multi-Backend Orchestration
-- Run on multiple IonQ targets simultaneously
-- Load balancing across QPUs
-- Fallback to simulator when QPU busy
-
-### v3.6: Advanced ML Features
-- Quantum transfer learning
-- Few-shot learning
-- Meta-learning with quantum circuits
-
-### v3.7: Production Hardening
-- Circuit verification
-- Error mitigation
-- Noise-aware training
-
 ## Support & Resources
 
 - **Examples**: See comprehensive examples in `examples/examples_v3_4.py`

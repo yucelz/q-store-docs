@@ -1,7 +1,11 @@
 ---
-title: Q-Store v3.3
+title: Q-Store v3.3 (Retired)
 description: High-Performance ML Training with 50-100x Algorithmic Optimization
 ---
+
+:::caution[Retired Version]
+This version is retired. Please upgrade to [v3.5](/getting-started/version-3-5) better performance and production-ready optimizations.
+:::
 
 ## Overview
 
@@ -515,12 +519,6 @@ When upgrading from v3.2 to v3.3:
 - [ ] Monitor cache hit rates
 - [ ] Update any custom backend implementations for async support (if applicable)
 
-## References
-
-### Academic Papers
-1. Spall, J.C. (1992). "Multivariate Stochastic Approximation Using a Simultaneous Perturbation Gradient Approximation"
-2. Schuld, M. et al. (2019). "Evaluating analytic gradients on quantum hardware"
-3. Kandala, A. et al. (2017). "Hardware-efficient variational quantum eigensolver"
 
 ### Implementation Guides
 - Pennylane: Quantum gradient computation
