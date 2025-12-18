@@ -5,7 +5,7 @@ description: Comprehensive collection of Q-Store examples demonstrating quantum 
 
 ## Overview
 
-The [Q-Store Examples Repository](https://github.com/yucelz/q-store-examples) provides standalone example projects demonstrating Q-Store 3.4.3 quantum database capabilities for machine learning training, financial applications, and more.
+The [Q-Store Examples Repository](https://github.com/yucelz/q-store-examples) provides standalone example projects demonstrating Q-Store quantum database capabilities for machine learning training, financial applications, and more.
 
 All examples support both **mock mode** (for safe testing without API calls) and **real backends** (Pinecone + IonQ) with flexible configuration options.
 
@@ -190,15 +190,6 @@ python src/q_store_examples/examples_v3_4.py --no-mock \
 | Example 6 | Configuration Guide | 4 config scenarios |
 | Example 7 | Performance Evolution | v3.2 → v3.4 comparison |
 
-**Migration from v3.3.1**:
-```python
-# Just add one line to your existing config:
-config = TrainingConfig(
-    # ... all your existing v3.3.1 settings ...
-    enable_all_v34_features=True  # 🔥 Enable v3.4 optimizations
-)
-# That's it! Fully backward compatible.
-```
 
 ### 7. ML Training Example
 
@@ -257,24 +248,6 @@ python tinyllama_react_training.py
 
 See `REACT_QUICK_REFERENCE.md` in the examples repository for detailed instructions.
 
-## Performance Comparison
-
-### Version Evolution
-
-| Version | Circuits/Batch | Key Innovation | Speedup |
-|---------|----------------|----------------|---------|
-| v3.2 | 960 | Parameter Shift | Baseline |
-| v3.3 | 20 | SPSA (48x fewer circuits) | 24-48x |
-| v3.3.1 | 20 | Parallel SPSA | Correct implementation |
-| v3.4 | 20 | Batch API + Native Gates + Caching | **8-10x vs v3.3.1** |
-
-### Training Time Benchmarks
-
-| Metric | v3.2 | v3.3 | v3.4 |
-|--------|------|------|------|
-| Batch time | ~300s | ~60s | ~4s |
-| Epoch time | ~3000s | ~600s | ~40s |
-| Full training (3 epochs) | ~150 min | ~30 min | ~3.75 min |
 
 ## Installation Options
 
@@ -438,29 +411,6 @@ The examples repository includes comprehensive documentation:
 | `TINYLLAMA_TRAINING_README.md` | TinyLlama fine-tuning guide |
 | `IMPROVEMENTS_SUMMARY.md` | Code improvements and comparisons |
 | `SETUP.md` | Detailed setup instructions and troubleshooting |
-
-## Performance Benchmarks
-
-### Dataset Sizes
-
-- **Minimal**: 500-1,000 samples (fast, for testing)
-- **Medium**: 1,000-5,000 samples (balanced)
-- **Large**: 5,000-10,000+ samples (best results)
-
-### Training Times (Approximate)
-
-- Dataset Generation: 10-30 seconds
-- Database Loading: 1-3 minutes
-- Quantum Sampling Demo: 30 seconds
-- Full Training: 30-90 minutes (with GPU)
-
-## Next Steps
-
-1. **Run Basic Example**: Start with `basic_example.py` to understand core concepts
-2. **Try React Training**: Use the automated workflow for LLM fine-tuning
-3. **Experiment with v3.4**: Experience the latest performance optimizations
-4. **Build Your Own**: Use examples as templates for your projects
-5. **Contribute**: Share improvements and new examples
 
 ## Related Resources
 
