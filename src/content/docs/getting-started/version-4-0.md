@@ -17,9 +17,7 @@ Q-Store v4.0 represents a **fundamental architectural transformation** Quantum's
 
 This is not just an update - it's a complete reimagining of how quantum machine learning should work in production environments.
 
-## 🎯 Executive Summary
-
-### What Changes in v4.0
+## 🎯 What Changes in v4.0
 
 | Aspect | v3.5 (Current) | v4.0 (New) |
 |--------|----------------|------------|
@@ -534,7 +532,6 @@ configure(
 ### For Organizations
 
 - **Reduced Risk**: Built on proven TensorFlow and PyTorch architectures
-- **Kubernetes Native**: Deploy using standard Kubernetes operators
 - **Cost Transparency**: Track quantum computing costs alongside traditional infrastructure
 - **Scalability**: Leverage existing distributed training infrastructure
 
