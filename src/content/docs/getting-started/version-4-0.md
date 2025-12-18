@@ -4,14 +4,14 @@ description: Q-Store v4.0 represents a fundamental transformation - bringing ind
 ---
 
 :::caution[Design Phase]
-**Version 4.0.0 is currently in the design phase** and scheduled for production release in 10 weeks. This documentation describes the planned architecture and features. Join our [GitHub discussions](https://github.com/yourusername/q-store) to influence the final design.
+**Version 4.0.0 is currently in the design phase** and scheduled for production. This documentation describes the planned architecture and features. Join our [GitHub discussions](https://github.com/yucelz/q-store-examples) to influence the final design.
 :::
 
 ## 🚀 The Big Announcement
 
 ### From Custom Framework to Industry Standard
 
-Q-Store v4.0 represents a **fundamental architectural transformation** inspired by TensorFlow Quantum's proven patterns while maintaining our unique advantages in real quantum hardware optimization and quantum database capabilities.
+Q-Store v4.0 represents a **fundamental architectural transformation** Quantum's proven patterns while maintaining our unique advantages in real quantum hardware optimization and quantum database capabilities.
 
 **Core Philosophy**: *"Make quantum ML as easy as classical ML, but optimized for real quantum hardware."*
 
