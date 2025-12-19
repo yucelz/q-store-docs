@@ -4,8 +4,6 @@ import starlight from '@astrojs/starlight';
 
 import vercel from '@astrojs/vercel';
 
-import partytown from '@astrojs/partytown';
-
 // https://astro.build/config
 export default defineConfig({
   integrations: [
@@ -86,11 +84,7 @@ export default defineConfig({
               ],
           },
       ],
-  }),
-    partytown({
-      forward: ['dataLayer.push'],
-    }),
-  ],
+  })],
 
   adapter: vercel(),
 });
