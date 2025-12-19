@@ -1,4 +1,228 @@
 <style>
+  /* Modal Overlay */
+  .cookie-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  /* Modal Container */
+  .cookie-modal {
+    position: relative;
+    background: white;
+    border-radius: 16px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Modal Header */
+  .cookie-header {
+    padding: 2rem 2rem 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    position: relative;
+  }
+
+  .cookie-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: #f3f4f6;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: #6b7280;
+    transition: all 0.2s;
+  }
+
+  .close-btn:hover {
+    background: #e5e7eb;
+    color: #111827;
+  }
+
+  /* Modal Content */
+  .cookie-content {
+    padding: 1.5rem 2rem;
+  }
+
+  .cookie-intro {
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .cookie-intro a {
+    color: #7c3aed;
+    text-decoration: underline;
+  }
+
+  /* Cookie Sections */
+  .cookie-section {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .cookie-section:last-child {
+    border-bottom: none;
+  }
+
+  .cookie-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .cookie-section h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  .cookie-section p {
+    color: #6b7280;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0 0 0.75rem 0;
+  }
+
+  /* Toggle Switch */
+  .toggle-switch {
+    position: relative;
+    width: 48px;
+    height: 28px;
+    background: #d1d5db;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .toggle-switch.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .toggle-switch.active {
+    background: #7c3aed;
+  }
+
+  .toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+  }
+
+  .toggle-switch.active::after {
+    transform: translateX(20px);
+  }
+
+  /* Show Providers */
+  .show-providers {
+    background: none;
+    border: none;
+    color: #7c3aed;
+    font-size: 0.875rem;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+  }
+
+  .show-providers:hover {
+    text-decoration: underline;
+  }
+
+  .providers-list {
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    background: #f9fafb;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: #4b5563;
+    display: none;
+  }
+
+  .providers-list.visible {
+    display: block;
+  }
+
+  .providers-list ul {
+    margin: 0.5rem 0 0 0;
+    padding-left: 1.5rem;
+  }
+
+  /* Action Buttons */
+  .cookie-actions {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-primary {
+    background: #7c3aed;
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: #6d28d9;
+  }
+
+  .btn-secondary {
+    background: #f3f4f6;
+    color: #374151;
+  }
+
+  .btn-secondary:hover {
+    background: #e5e7eb;
+  }
+
+  /* Simple Banner (Initial) */
   .cookie-banner {
     position: fixed;
     bottom: 1rem;
@@ -6,71 +230,344 @@
     right: 1rem;
     max-width: 420px;
     margin: auto;
-    padding: 1rem;
-    background: #111;
-    color: #fff;
-    border-radius: 14px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.3);
+    padding: 1.25rem;
+    background: white;
+    color: #111827;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     z-index: 9999;
-    font-size: 0.9rem;
   }
 
-  .cookie-actions {
+  .banner-title {
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .banner-text {
+    color: #4b5563;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0 0 1rem 0;
+  }
+
+  .banner-text a {
+    color: #7c3aed;
+    text-decoration: underline;
+  }
+
+  .banner-actions {
     display: flex;
-    gap: .5rem;
-    margin-top: .75rem;
+    gap: 0.5rem;
   }
 
-  button {
-    flex: 1;
-    padding: .5rem;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
+  .hidden {
+    display: none;
   }
 
-  .accept { background: #4ade80; }
-  .reject { background: #374151; color: white; }
+  /* Responsive */
+  @media (max-width: 640px) {
+    .cookie-modal {
+      max-height: 95vh;
+    }
+
+    .cookie-header,
+    .cookie-content,
+    .cookie-actions {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+
+    .cookie-actions {
+      flex-direction: column;
+    }
+  }
 </style>
 
-<div id="cookie-banner" class="cookie-banner" hidden>
-  <strong>Cookies</strong>
-  <p>
-    We use cookies to understand how this site is used.
+<!-- Simple Banner (shown first) -->
+<div id="cookie-banner" class="cookie-banner hidden">
+  <h3 class="banner-title">Manage cookies</h3>
+  <p class="banner-text">
+    Cookies and similar technologies collect certain information about how you're using our website. 
+    Some of them are essential, and without them you wouldn't be able to use Q-Store Docs. 
+    But others are optional, and you get to choose whether we use them or not.
+    <br><br>
+    Hungry for more? <a href="#" id="read-policy">Read our full Cookie Policy</a>.
   </p>
+  <div class="banner-actions">
+    <button class="btn btn-primary" id="accept-all">Accept all</button>
+    <button class="btn btn-secondary" id="reject-all">Reject all</button>
+  </div>
+</div>
 
-  <div class="cookie-actions">
-    <button class="accept" id="accept">Accept</button>
-    <button class="reject" id="reject">Reject</button>
+<!-- Detailed Cookie Management Modal -->
+<div id="cookie-overlay" class="cookie-overlay hidden">
+  <div class="cookie-modal">
+    <div class="cookie-header">
+      <h2>Manage cookies</h2>
+      <button class="close-btn" id="close-modal" aria-label="Close">×</button>
+    </div>
+
+    <div class="cookie-content">
+      <p class="cookie-intro">
+        Cookies and similar technologies collect certain information about how you're using our website. 
+        Some of them are essential, and without them you wouldn't be able to use Q-Store Docs. 
+        But others are optional, and you get to choose whether we use them or not.
+        <br><br>
+        Hungry for more? <a href="/license" target="_blank">Read our full Cookie Policy</a>.
+      </p>
+
+      <!-- Essential Cookies -->
+      <div class="cookie-section">
+        <div class="cookie-section-header">
+          <h3>Essential Cookies</h3>
+          <div class="toggle-switch active disabled"></div>
+        </div>
+        <p>
+          These cookies are always on, as they're essential for making Q-Store Docs work, and 
+          making it safe. Without these cookies, services you've asked for can't be provided.
+        </p>
+        <button class="show-providers" data-section="essential">
+          <span>Show cookie providers</span>
+          <span>▼</span>
+        </button>
+        <div class="providers-list" id="providers-essential">
+          <strong>Cookie providers:</strong>
+          <ul>
+            <li>Session management</li>
+            <li>Security and authentication</li>
+            <li>Site preferences</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Functionality Cookies -->
+      <div class="cookie-section">
+        <div class="cookie-section-header">
+          <h3>Functionality Cookies</h3>
+          <div class="toggle-switch" id="toggle-functionality" role="switch" aria-checked="false" tabindex="0"></div>
+        </div>
+        <p>
+          These cookies help us provide enhanced functionality and personalisation, and 
+          remember your settings. They may be set by us or by third party providers.
+        </p>
+        <button class="show-providers" data-section="functionality">
+          <span>Show cookie providers</span>
+          <span>▼</span>
+        </button>
+        <div class="providers-list" id="providers-functionality">
+          <strong>Cookie providers:</strong>
+          <ul>
+            <li>Theme preferences (dark/light mode)</li>
+            <li>Language selection</li>
+            <li>Search history</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Performance Cookies -->
+      <div class="cookie-section">
+        <div class="cookie-section-header">
+          <h3>Performance Cookies</h3>
+          <div class="toggle-switch" id="toggle-performance" role="switch" aria-checked="false" tabindex="0"></div>
+        </div>
+        <p>
+          These cookies help us analyze how many people are using Q-Store Docs, where they 
+          come from and how they're using it. If you opt out of these cookies, we can't get 
+          feedback to make Q-Store Docs better for you and all our users.
+        </p>
+        <button class="show-providers" data-section="performance">
+          <span>Show cookie providers</span>
+          <span>▼</span>
+        </button>
+        <div class="providers-list" id="providers-performance">
+          <strong>Cookie providers:</strong>
+          <ul>
+            <li>Google Analytics</li>
+            <li>Page performance monitoring</li>
+            <li>Error tracking</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Targeting Cookies -->
+      <div class="cookie-section">
+        <div class="cookie-section-header">
+          <h3>Targeting Cookies</h3>
+          <div class="toggle-switch" id="toggle-targeting" role="switch" aria-checked="false" tabindex="0"></div>
+        </div>
+        <p>
+          These cookies are set by our advertising partners to track your activity and show 
+          you relevant Q-Store Docs content on other sites as you browse the internet.
+        </p>
+        <button class="show-providers" data-section="targeting">
+          <span>Show cookie providers</span>
+          <span>▼</span>
+        </button>
+        <div class="providers-list" id="providers-targeting">
+          <strong>Cookie providers:</strong>
+          <ul>
+            <li>Advertising networks</li>
+            <li>Social media integration</li>
+            <li>Remarketing services</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="cookie-actions">
+      <button class="btn btn-primary" id="save-close">Save & Close</button>
+    </div>
   </div>
 </div>
 
 <script is:inline>
   const STORAGE_KEY = 'cookie-consent';
+  const PREFERENCES_KEY = 'cookie-preferences';
 
   const banner = document.getElementById('cookie-banner');
+  const overlay = document.getElementById('cookie-overlay');
   const saved = localStorage.getItem(STORAGE_KEY);
 
-  if (!saved) {
-    banner.hidden = false;
+  // Cookie preferences state
+  let preferences = {
+    essential: true,
+    functionality: false,
+    performance: false,
+    targeting: false
+  };
+
+  // Load saved preferences
+  const savedPrefs = localStorage.getItem(PREFERENCES_KEY);
+  if (savedPrefs) {
+    try {
+      preferences = { ...preferences, ...JSON.parse(savedPrefs) };
+    } catch (e) {
+      console.error('Failed to parse cookie preferences');
+    }
   }
 
-  function setConsent(granted) {
+  // Show banner if no consent saved
+  if (!saved) {
+    banner.classList.remove('hidden');
+  }
+
+  // Initialize toggles
+  function initializeToggles() {
+    ['functionality', 'performance', 'targeting'].forEach(type => {
+      const toggle = document.getElementById(`toggle-${type}`);
+      if (toggle && preferences[type]) {
+        toggle.classList.add('active');
+        toggle.setAttribute('aria-checked', 'true');
+      }
+    });
+  }
+
+  // Toggle functionality
+  function setupToggle(type) {
+    const toggle = document.getElementById(`toggle-${type}`);
+    if (!toggle) return;
+
+    const handleToggle = () => {
+      preferences[type] = !preferences[type];
+      toggle.classList.toggle('active');
+      toggle.setAttribute('aria-checked', preferences[type] ? 'true' : 'false');
+    };
+
+    toggle.addEventListener('click', handleToggle);
+    toggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleToggle();
+      }
+    });
+  }
+
+  // Setup provider toggles
+  document.querySelectorAll('.show-providers').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const section = btn.dataset.section;
+      const providersList = document.getElementById(`providers-${section}`);
+      if (providersList) {
+        providersList.classList.toggle('visible');
+        const arrow = btn.querySelector('span:last-child');
+        arrow.textContent = providersList.classList.contains('visible') ? '▲' : '▼';
+      }
+    });
+  });
+
+  // Set consent
+  function setConsent(grantedTypes) {
+    // Update Google Analytics consent
     window.gtag?.('consent', 'update', {
-      analytics_storage: granted ? 'granted' : 'denied',
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
-      ad_personalization: 'denied',
+      analytics_storage: grantedTypes.performance ? 'granted' : 'denied',
+      ad_storage: grantedTypes.targeting ? 'granted' : 'denied',
+      ad_user_data: grantedTypes.targeting ? 'granted' : 'denied',
+      ad_personalization: grantedTypes.targeting ? 'granted' : 'denied',
+      functionality_storage: grantedTypes.functionality ? 'granted' : 'denied',
     });
 
-    localStorage.setItem(
-      STORAGE_KEY,
-      granted ? 'accepted' : 'rejected'
-    );
+    // Save preferences
+    localStorage.setItem(PREFERENCES_KEY, JSON.stringify(grantedTypes));
+    localStorage.setItem(STORAGE_KEY, 'configured');
 
-    banner.hidden = true;
+    // Hide UI
+    banner.classList.add('hidden');
+    overlay.classList.add('hidden');
   }
 
-  document.getElementById('accept').onclick = () => setConsent(true);
-  document.getElementById('reject').onclick = () => setConsent(false);
+  // Accept all
+  document.getElementById('accept-all').addEventListener('click', () => {
+    preferences = {
+      essential: true,
+      functionality: true,
+      performance: true,
+      targeting: true
+    };
+    setConsent(preferences);
+  });
+
+  // Reject all
+  document.getElementById('reject-all').addEventListener('click', () => {
+    preferences = {
+      essential: true,
+      functionality: false,
+      performance: false,
+      targeting: false
+    };
+    setConsent(preferences);
+  });
+
+  // Open detailed modal
+  document.getElementById('read-policy').addEventListener('click', (e) => {
+    e.preventDefault();
+    banner.classList.add('hidden');
+    overlay.classList.remove('hidden');
+    initializeToggles();
+  });
+
+  // Close modal
+  document.getElementById('close-modal').addEventListener('click', () => {
+    overlay.classList.add('hidden');
+    banner.classList.remove('hidden');
+  });
+
+  // Save & close
+  document.getElementById('save-close').addEventListener('click', () => {
+    setConsent(preferences);
+  });
+
+  // Setup toggles
+  ['functionality', 'performance', 'targeting'].forEach(setupToggle);
+
+  // Close modal on overlay click
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      overlay.classList.add('hidden');
+      banner.classList.remove('hidden');
+    }
+  });
+
+  // Initialize on load
+  initializeToggles();
 </script>
