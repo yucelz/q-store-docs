@@ -1,74 +1,103 @@
 ---
 title: License
-description: Q-Store licensing information and usage terms
+description: Q-Store dual licensing - AGPLv3 for open source and commercial licensing options
 ---
 
-# License
+# Dual License
 
-Q-Store is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)** license.
+This software is available under a dual licensing model:
 
-## Quick Summary
+## 1. Open Source License: GNU Affero General Public License v3.0 (AGPLv3)
 
-### ✅ You Can
+For open source use, this software is licensed under the GNU Affero General Public License v3.0.
 
-- **Share** — Copy and redistribute the material in any medium or format for non-commercial purposes
-- **Adapt** — Remix, transform, and build upon the material for non-commercial purposes
-- **Personal Use** — Use Q-Store for personal projects, learning, and experimentation
-- **Educational Use** — Use in classroom settings, tutorials, workshops, or educational content (free of charge)
-- **Open Source** — Incorporate into non-profit, open-source projects
-- **Research** — Use for academic research, thesis work, or publications
+### Key Terms of AGPLv3:
 
-### ❌ You Cannot
+- **Freedom to Use**: You may use this software for any purpose
+- **Freedom to Study**: You have access to the source code and can study how it works
+- **Freedom to Modify**: You can modify the software to suit your needs
+- **Freedom to Distribute**: You can distribute copies of the original or modified software
 
-- **Sell** — Sell the software or any derivative works
-- **Commercial Products** — Use in products or services that generate revenue
-- **Client Work** — Use in projects for paying clients
-- **SaaS** — Deploy as part of paid Software-as-a-Service offerings
-- **Paid Courses** — Use in commercial training programs or paid courses
-- **Monetization** — Use on platforms where you receive ad revenue or sponsorships
+### Important Requirements:
 
-### 📋 Attribution Required
+1. **Share Modifications**: If you modify this software and distribute it, you must make your modifications available under AGPLv3
+2. **Network Use**: If you run a modified version on a server and let others interact with it over a network, you must provide them access to the modified source code
+3. **Attribution**: You must retain copyright notices and license information
+4. **Same License**: Derivative works must be licensed under AGPLv3
 
-When using Q-Store, you must provide appropriate credit:
+### Full AGPLv3 License Text:
 
-```
-Original work by Yucel Zengin (yucelz@gmail.com)
-Licensed under CC BY-NC 4.0: https://creativecommons.org/licenses/by-nc/4.0/
-```
+The complete legal text of the AGPLv3 license can be found at:
+**https://www.gnu.org/licenses/agpl-3.0.html**
 
-## Commercial Licensing
+---
 
-If you wish to use Q-Store for **commercial purposes**, you must:
+## 2. Commercial License
 
-1. Contact the copyright holder: **Yucel Zengin** at [yucelz@gmail.com](mailto:yucelz@gmail.com)
-2. Obtain explicit written permission
-3. Negotiate terms for commercial licensing
-4. Receive a signed commercial license agreement
+If the AGPLv3 license does not suit your needs (for example, if you want to use this software in proprietary applications without open-sourcing your code), a commercial license is available.
 
-**Commercial inquiries are welcome** — please provide details about your intended use when requesting permission.
+### Benefits of Commercial License:
 
-## Modifications and Derivatives
+- Use the software in proprietary/closed-source applications
+- No requirement to disclose your source code
+- No copyleft obligations
+- Priority support options available
+- Custom licensing terms available
 
-- You may modify and adapt Q-Store for personal and educational use
-- All derivative works must retain the CC BY-NC 4.0 license if shared publicly
-- You must clearly indicate what changes were made to the original work
-- Modified versions are provided "as-is" without warranty from the original creator
+### To Obtain a Commercial License:
+
+**Contact:** Yucel Zengin
+**Email:** yucelz@gmail.com
+**Subject:** Q-Store Commercial License Inquiry
+
+Please include:
+- Description of your intended use
+- Project scope and timeline
+- Company/organization information (if applicable)
+- Any specific licensing requirements
+
+---
+
+## Which License Should You Choose?
+
+### Choose AGPLv3 (Free) if:
+- You're building open source software
+- You're willing to share your modifications
+- You're comfortable with copyleft requirements
+- You're using it for research or educational purposes
+- You plan to contribute back to the community
+
+### Choose Commercial License if:
+- You're building proprietary/closed-source software
+- You cannot or do not want to disclose your source code
+- You need freedom from copyleft obligations
+- You want to integrate this into commercial products
+- You need custom licensing terms or support
+
+---
+
+## Frequently Asked Questions
+
+**Q: Can I use this software for free?**
+A: Yes, under the AGPLv3 license, which requires you to share modifications if you distribute the software or run it as a network service.
+
+**Q: What if I just want to evaluate the software?**
+A: Evaluation is permitted under AGPLv3 with no licensing fees.
+
+**Q: Do I need a commercial license for SaaS applications?**
+A: Under AGPLv3, if you run modified software on a server that users interact with, you must provide the source code. If this doesn't work for your business model, contact us for a commercial license.
+
+**Q: Can I get a commercial license for a specific project?**
+A: Yes, we can provide project-specific or time-limited commercial licenses. Contact us to discuss your needs.
+
+---
 
 ## Disclaimer
 
-This software is provided **"as-is"** without warranty of any kind, either express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement. The licensor shall not be liable for any damages, claims, or losses arising from the use of this software.
-
-## Full License Text
-
-The complete legal text of the CC BY-NC 4.0 license can be found at:  
-[https://creativecommons.org/licenses/by-nc/4.0/legalcode](https://creativecommons.org/licenses/by-nc/4.0/legalcode)
-
-## License Violations
-
-Unauthorized commercial use of Q-Store constitutes a violation of copyright law and may result in legal action. If you discover unauthorized commercial use, please report it to [yucelz@gmail.com](mailto:yucelz@gmail.com).
+THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ---
 
-© 2025 Yucel Zengin. All rights reserved.
+**Copyright © 2025 Yucel Zengin. All rights reserved.**
 
 *Last Updated: December 2025*

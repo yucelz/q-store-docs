@@ -9,6 +9,7 @@ The [Q-Store Examples Repository](https://github.com/yucelz/q-store-examples) pr
 
 All examples support both **mock mode** (for safe testing without API calls) and **real backends** (Pinecone + IonQ) with flexible configuration options.
 
+[![Example Projects](https://img.shields.io/badge/GitHub-Example%20Projects-blue?logo=github)](https://github.com/yucelz/q-store-examples)
 ## Quick Start
 
 ### Installation

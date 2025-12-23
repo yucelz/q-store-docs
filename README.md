@@ -1,6 +1,8 @@
 # Quantum-Native Database Architecture v3.2
 ## Complete ML Training Integration with Hardware Abstraction
 
+[![Docs](https://img.shields.io/badge/Docs-Source%20Code-blue)](https://github.com/yucelz/q-store)
+
 ---
 
 ## 📦 What's New in v3.2
@@ -450,6 +452,14 @@ history = trainer.get_training_history()
 
 ---
 
+## 🚀 Example Projects
+
+[![Docs](https://img.shields.io/badge/Docs-Example%20Projects-blue)](https://github.com/yucelz/q-store-examples)
+
+Check out the [Q-Store Examples Repository](https://github.com/yucelz/q-store-examples) for comprehensive, standalone examples demonstrating quantum database capabilities.
+
+---
+
 ## 🔮 Roadmap
 
 ### v3.3 (Next Release)
@@ -532,6 +542,13 @@ If you use this quantum ML training framework in your research, please cite:
 - **Issues**: GitHub Issues
 - **Documentation**: See `Quantum-Native_Database_Architecture_v3_2.md`
 - **Examples**: Run `examples_v3_2.py`
+
+## 🌐 Community
+
+[![Slack](https://img.shields.io/badge/Slack-Join%20Group-4A154B?logo=slack&logoColor=white)](https://q-storeworkspace.slack.com/archives/C0A4X3S055Y)
+[![Discord](https://img.shields.io/badge/Discord-Join%20Server-5865F2?logo=discord&logoColor=white)](https://discord.gg/wYmXxEvm)
+
+**LinkedIn**: [Q-Store Tech](https://www.linkedin.com/company/q-store-tech/)
 
 ---
 

@@ -55,11 +55,21 @@ Please contact [yucelz@gmail.com](mailto:yucelz@gmail.com) or  [yucelz@q-store.t
 
 ## Community
 
+### Join Our Community
+
+Connect with other Q-Store users and developers:
+
+[![Slack](https://img.shields.io/badge/Slack-Join%20Group-4A154B?logo=slack&logoColor=white)](https://q-storeworkspace.slack.com/archives/C0A4X3S055Y)
+###
+[![Discord](https://img.shields.io/badge/Discord-Join%20Server-5865F2?logo=discord&logoColor=white)](https://discord.gg/wYmXxEvm)
+
+**LinkedIn**: [Q-Store Tech Company Page](https://www.linkedin.com/company/q-store-tech/)
+
 ### Stay Updated
 
 For updates on Q-Store development and releases:
 
-- Watch the GitHub repository
+- Watch the [GitHub repository](https://github.com/yucelz/q-store)
 - Subscribe to release notifications
 - Contact [yucelz@gmail.com](mailto:yucelz@gmail.com) or  [yucelz@q-store.tech](mailto:yucelz@q-store.tech) to join our mailing list
 
