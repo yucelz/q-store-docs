@@ -47,7 +47,7 @@ If the AGPLv3 license does not suit your needs (for example, if you want to use 
 ### To Obtain a Commercial License:
 
 **Contact:** Yucel Zengin
-**Email:** yucelz@gmail.com
+**Email:** yucelz@q-store.tech
 **Subject:** Q-Store Commercial License Inquiry
 
 Please include:

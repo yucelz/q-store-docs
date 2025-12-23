@@ -17,6 +17,9 @@ Q-Store v4.0 represents a **fundamental architectural transformation** Quantum's
 
 This is not just an update - it's a complete reimagining of how quantum machine learning should work in production environments.
 
+**GitHub Discussions**: Share your thoughts on the v4.0 design 
+  [![Discussions](https://img.shields.io/badge/GitHub-Discussions-blue?logo=githubdiscussions)](https://github.com/yucelz/q-store/discussions)
+
 ## 🎯 What Changes in v4.0
 
 | Aspect | v3.5 (Current) | v4.0 (New) |
@@ -535,7 +538,7 @@ configure(
 - **Cost Transparency**: Track quantum computing costs alongside traditional infrastructure
 - **Scalability**: Leverage existing distributed training infrastructure
 
-- **GitHub Discussions**: Share your thoughts on the v4.0 design
+
 - **Feature Requests**: Suggest features for the final release
 - **Early Testing**: Join the beta program (weeks 7-8)
 - **Documentation**: Help improve examples and guides

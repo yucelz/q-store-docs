@@ -8,13 +8,13 @@ description: Get in touch with the Q-Store team
 ## Creator & Maintainer
 
 **Yucel Zengin**  
-Email: [yucelz@gmail.com](mailto:yucelz@gmail.com) or  [yucelz@q-store.tech](mailto:yucelz@q-store.tech)
+Email: [yucelz@q-store.tech](mailto:yucelz@q-store.tech)
 
 ## Commercial Licensing Inquiries
 
 For commercial use of Q-Store, please contact:
 
-**Email:** [yucelz@gmail.com](mailto:yucelz@gmail.com) or  [yucelz@q-store.tech](mailto:yucelz@q-store.tech)
+**Email:** [yucelz@q-store.tech](mailto:yucelz@q-store.tech) 
 
 When reaching out for commercial licensing, please include:
 
@@ -31,7 +31,7 @@ For general questions about Q-Store, please:
 
 - Check the [documentation](/getting-started/quick-start) first
 - Review the [FAQ and troubleshooting guides](/guides/example)
-- Contact via email: [yucelz@gmail.com](mailto:yucelz@gmail.com) or  [yucelz@q-store.tech](mailto:yucelz@q-store.tech)
+- Contact via email: [yucelz@q-store.tech](mailto:yucelz@q-store.tech)
 
 ### Bug Reports & Feature Requests
 
@@ -40,7 +40,7 @@ If you encounter bugs or have feature suggestions:
 1. Check if the issue has already been reported
 2. Provide detailed reproduction steps
 3. Include your Q-Store version and environment details
-4. Send your report to [yucelz@gmail.com](mailto:yucelz@gmail.com) or  [yucelz@q-store.tech](mailto:yucelz@q-store.tech)
+4. Send your report to [yucelz@q-store.tech](mailto:yucelz@q-store.tech) 
 
 ### Contributing
 
@@ -51,7 +51,7 @@ Interested in contributing to Q-Store? We welcome:
 - Example applications and use cases
 - Performance optimizations
 
-Please contact [yucelz@gmail.com](mailto:yucelz@gmail.com) or  [yucelz@q-store.tech](mailto:yucelz@q-store.tech) to discuss contribution opportunities.
+Please contact [yucelz@q-store.tech](mailto:yucelz@q-store.tech) to discuss contribution opportunities.
 
 ## Community
 
@@ -71,7 +71,7 @@ For updates on Q-Store development and releases:
 
 - Watch the [GitHub repository](https://github.com/yucelz/q-store)
 - Subscribe to release notifications
-- Contact [yucelz@gmail.com](mailto:yucelz@gmail.com) or  [yucelz@q-store.tech](mailto:yucelz@q-store.tech) to join our mailing list
+- Contact [yucelz@q-store.tech](mailto:yucelz@q-store.tech) to join our mailing list
 
 ## Professional Services
 
@@ -82,7 +82,7 @@ For professional services such as:
 - Training and workshops
 - Consulting and architecture review
 
-Please contact [yucelz@gmail.com](mailto:yucelz@gmail.com) or  [yucelz@q-store.tech](mailto:yucelz@q-store.tech)with details about your needs.
+Please contact [yucelz@q-store.tech](mailto:yucelz@q-store.tech) with details about your needs.
 
 ---
 
