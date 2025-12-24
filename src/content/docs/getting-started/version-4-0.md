@@ -4,8 +4,7 @@ description: Q-Store v4.0 represents a fundamental transformation - bringing ind
 ---
 
 :::caution[Design Phase]
-**Version 4.0.0 is currently in the design phase** and scheduled for production. This documentation describes the planned architecture and features. Join our [GitHub discussions](https://github.com/yucelz/q-store-examples) to influence the final design.
-:::
+**Version 4.0.0 is currently in the design phase** and scheduled for production. This documentation describes the planned architecture and features.
 
 ## 🚀 The Big Announcement
 
