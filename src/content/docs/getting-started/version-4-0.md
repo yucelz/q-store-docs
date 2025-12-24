@@ -18,7 +18,7 @@ Q-Store v4.0 represents a **fundamental architectural transformation** Quantum's
 This is not just an update - it's a complete reimagining of how quantum machine learning should work in production environments.
 
 **GitHub Discussions**: Share your thoughts on the v4.0 design 
-  [![Discussions](https://img.shields.io/badge/GitHub-Discussions-blue?logo=githubdiscussions)](https://github.com/yucelz/q-store/discussions)
+  [![Discussions](https://img.shields.io/badge/GitHub-Discussions-blue?logo=githubdiscussions)](https://github.com/yucelz/q-store/discussions/5)
 
 ## 🎯 What Changes in v4.0
 
