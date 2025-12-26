@@ -2,6 +2,9 @@
 title: Example Projects
 description: Comprehensive collection of Q-Store examples demonstrating quantum database capabilities, ML training, and real-world applications.
 ---
+:::caution[Support Version]
+** These example projects work with q-store version 3.5 and below.
+:::
 
 ## Overview
 
