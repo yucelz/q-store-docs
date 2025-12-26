@@ -1,73 +1,103 @@
 ---
-title: Q-Store - Quantum-Native Database
-description: A novel database architecture leveraging quantum mechanical properties for exponential performance advantages
+title: Q-Store Documentation
+description: Revolutionary quantum-native database and machine learning framework
+template: splash
+hero:
+  tagline: Seamlessly integrate quantum computing with classical ML workflows - 10-20x faster training without quantum physics expertise
+  image:
+    file: ../../assets/logo.svg
+  actions:
+    - text: Quick Start Guide
+      link: /getting-started/quick-start/
+      icon: right-arrow
+      variant: primary
+    - text: Installation Guide
+      link: /getting-started/installation/
+      icon: document
+      variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-# Q-Store Database Architecture
+## What is Q-Store?
 
-[![Source Code](https://img.shields.io/badge/GitHub-Source%20Code-blue?logo=github)](https://github.com/yucelz/q-store)
+Q-Store is a revolutionary quantum-native database and machine learning framework that seamlessly integrates quantum computing capabilities with classical machine learning workflows. It enables developers and researchers to leverage quantum hardware (IonQ, IBM Quantum, etc.) and high-performance simulators for real-world ML applications without requiring deep quantum physics expertise.
 
-Q-Store is a novel database architecture that leverages quantum mechanical properties—**superposition**, **entanglement**, **decoherence**, and **tunneling**—as core features rather than obstacles.
+## The Problem We Solve
 
-## Key Innovation
+Traditional quantum ML frameworks face critical challenges:
 
-Instead of fighting quantum mechanics, we design the data infrastructure to **exploit quantum properties** for performance gains impossible with classical systems.
+- 🐌 **Performance Bottlenecks**: Sequential circuit submission causes 10-100x slower training
+- 🔧 **Complexity Barrier**: Steep learning curve requiring quantum physics expertise
+- 🔌 **Hardware Lock-in**: Tight coupling to specific quantum providers
+- 💾 **Data Management**: No production-ready storage for quantum ML training
+- 🎯 **Classical Overhead**: 100% CPU/GPU computation
+## Our Solution
 
-## Core Benefits
-
-<CardGrid>
-  <Card title="8-10x Faster Training" icon="rocket">
-    v3.4 true parallelization - 2.5-4 min for 5 epochs vs 32 min in v3.3
-  </Card>
-  <Card title="Production-Ready Performance" icon="approve-check">
-    Sub-60s epochs on IonQ hardware with native gate optimization
-  </Card>
-  <Card title="Smart Circuit Caching" icon="star">
-    10x faster preparation - template-based caching with parameter binding
-  </Card>
-  <Card title="True Batch Submission" icon="setting">
-    12x faster - single API call for all circuits with connection pooling
-  </Card>
+<CardGrid stagger>
+	<Card title="Performance-First Architecture" icon="rocket">
+		**10-20x faster quantum ML training**
+		
+		Async execution pipeline, smart caching and batching, native gate compilation for hardware
+	</Card>
+	<Card title="Quantum-First ML Layers" icon="star">
+		** 6% quantum computation**
+		
+		Replace classical layers with quantum circuits, natural quantum nonlinearity, information-theoretic optimal pooling
+	</Card>
+	<Card title="Hardware-Agnostic Design" icon="puzzle">
+		**Support for IonQ, IBM, Rigetti, Google**
+		
+		High-performance simulators (qsim, Lightning), seamless simulator ↔ hardware switching, plugin architecture
+	</Card>
+	<Card title="Production Storage Architecture" icon="approve-check">
+		**Battle-tested Zarr + Parquet stack**
+		
+		Async writes (never block training), efficient checkpointing and metrics, Pinecone integration for meta-learning
+	</Card>
 </CardGrid>
 
-## Applications
 
-Q-Store provides exponential advantages for:
+### Key Innovations (Unique to Q-Store v4.0)
 
-- **Vector Similarity Search**: Semantic search, embeddings, recommendations
-- **Financial Services**: Portfolio correlation, crisis detection, risk analysis
-- **ML Model Training**: **v3.3 - Train in minutes instead of hours** (50-100x faster)
-- **Scientific Computing**: Molecular similarity, drug discovery, materials science
+1. **🔄 Dual-Framework Support**: Both TensorFlow AND PyTorch (TFQ is TensorFlow-only)
+2. **⚛️ IonQ Hardware Optimization**: Native gates, cost tracking, queue management
+3. **💾 Quantum Database**: Integration with Pinecone for quantum state management
+4. **🎯 Smart Backend Routing**: Auto-select optimal backend based on cost/performance
+5. **💰 Production Cost Optimization**: Budget-aware training with automatic fallback
 
+## Documentation Sections
 
-## What's New in v3.4
-
-### 🚀 Performance Improvements
-
-| Metric | v3.3.1 | v3.4 | Improvement |
-|--------|--------|------|-------------|
-| **Batch time (20 circuits)** | 35s | 3-5s | **7-12x faster** |
-| **Circuits per second** | 0.6 | 5-8 | **8-13x faster** |
-| **Epoch time** | 392s | 30-50s | **8-13x faster** |
-| **Training (5 epochs)** | 32 min | 2.5-4 min | **8-13x faster** |
-| **Circuit preparation** | 0.5s | 0.05s | **10x faster** |
-
-## Next Steps
-
-<CardGrid>
-  <Card title="Quick Start" icon="rocket">
-    [Get started](/getting-started/quick-start) with Q-Store in minutes
-  </Card>
-  <Card title="Core Concepts" icon="open-book">
-    Learn about [quantum principles](/concepts/quantum-principles) in databases
-  </Card>
-  <Card title="API Reference" icon="document">
-    Explore the [Core API](/api/core) documentation
-  </Card>
-  <Card title="Production Guide" icon="setting">
-    Deploy with [production patterns](/production/connection-pooling)
-  </Card>
+<CardGrid stagger>
+	<Card title="Getting Started" icon="open-book">
+		Installation, quick start guide, and version history
+		
+		[View Getting Started →](/getting-started/quick-start/)
+	</Card>
+	<Card title="Core Components" icon="puzzle">
+		State Manager, Circuit Builder, Entanglement Registry, and Tunneling Engine
+		
+		[View Components →](/components/state-manager/)
+	</Card>
+	<Card title="Applications" icon="rocket">
+		Financial modeling, ML training, recommendations, and scientific computing
+		
+		[View Applications →](/applications/ml-training/)
+	</Card>
+	<Card title="IonQ Integration" icon="star">
+		SDK integration and quantum hardware optimization
+		
+		[View IonQ Docs →](/ionq/overview/)
+	</Card>
+	<Card title="Production Guide" icon="laptop">
+		Error handling, monitoring, batch operations, and connection pooling
+		
+		[View Production →](/production/error-handling/)
+	</Card>
+	<Card title="Advanced Topics" icon="document">
+		ML training performance optimization and best practices
+		
+		[View Advanced →](/advanced/ml-training-performance/)
+	</Card>
 </CardGrid>
 
