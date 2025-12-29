@@ -1,48 +1,100 @@
 ---
 title: Quantum Circuit Builder
-description: Component for building and optimizing quantum circuits for ML
+description: Component for building and optimizing quantum circuits in Q-Store v4.0.0
 ---
 
-The **Quantum Circuit Builder** generates optimized quantum circuits for hardware-agnostic execution, with enhanced support for ML training circuits in v3.2.
+The **Quantum Circuit Builder** generates hardware-agnostic quantum circuits for Q-Store v4.0.0, enabling quantum-enhanced database operations across multiple backend platforms.
 
-## Responsibilities
+## Overview
 
-- Generate quantum circuits for multiple backends (Cirq, Qiskit)
-- Implement data encoding circuits (amplitude, angle, basis)
-- Create variational quantum circuits for ML (NEW in v3.2)
-- Build entanglement operations with multiple patterns
-- Handle measurement basis selection
-- Optimize for native gate sets
-- Build quantum gradient circuits (NEW in v3.2)
+In Q-Store v4.0.0, the Circuit Builder provides:
+- **Hardware Abstraction**: Build once, run on IonQ, Cirq, Qiskit, or mock backends
+- **Optimized Circuits**: Gate-level optimization for minimal circuit depth
+- **Verification**: Unit
+
+arity checking and equivalence validation
+- **PyTorch Integration**: Quantum circuits as trainable neural network layers
+
+## Core Responsibilities
+
+### Circuit Construction
+
+The Circuit Builder creates quantum circuits for:
+
+1. **Data Encoding**: Transform classical vectors into quantum states
+2. **Variational Circuits**: Parameterized quantum layers for ML
+3. **Measurement Operations**: Extract classical results from quantum states
+4. **Entanglement Operations**: Multi-qubit correlation circuits
+
+### Hardware Abstraction
+
+Q-Store supports multiple quantum backends:
+
+```python
+from q_store import QuantumCircuit, DatabaseConfig
+
+# Mock mode - development/testing (no API key needed)
+config = DatabaseConfig(quantum_sdk='mock')
+
+# IonQ simulator - realistic quantum simulation
+config = DatabaseConfig(
+    quantum_sdk='ionq',
+    quantum_target='simulator',
+    ionq_api_key="your-key"
+)
+
+# IonQ hardware - real quantum processor
+config = DatabaseConfig(
+    quantum_sdk='ionq',
+    quantum_target='qpu',
+    ionq_api_key="your-key"
+)
+```
+
+### Circuit Optimization
+
+All circuits are optimized for:
+- **Minimal depth**: Reduce decoherence effects
+- **Native gates**: Compile to hardware-specific gate sets
+- **Unitarity**: Verify quantum mechanical validity
 
 ## Key Methods
 
 ### build_encoding_circuit()
 
-Encodes classical vector as quantum amplitudes.
+Creates quantum circuit for classical data encoding.
 
-**Function Signature:**
+**Signature:**
 ```python
 build_encoding_circuit(
     vector: np.ndarray,
-    encoding_type: str = 'amplitude'
+    encoding: str = 'amplitude',
+    n_qubits: Optional[int] = None
 ) -> QuantumCircuit
 ```
 
-**Purpose:** Create quantum circuit that encodes classical data into quantum states.
+**Parameters:**
+- `vector`: Classical data to encode
+- `encoding`: 'amplitude' or 'angle'
+- `n_qubits`: Number of qubits (auto-calculated if None)
 
-**Encoding Types:**
-- `amplitude`: Encode as state amplitudes
-- `angle`: Encode as rotation angles
-- `basis`: Encode as computational basis states
+**Returns:** Quantum circuit encoding the input vector
 
----
+**Example:**
+```python
+# Amplitude encoding: 768D vector → 10 qubits
+circuit = builder.build_encoding_circuit(
+    vector=embedding,
+    encoding='amplitude',
+    n_qubits=10
+)
+```
 
 ### build_variational_circuit()
 
-Creates variational quantum circuit for ML (NEW in v3.2).
+Creates parameterized quantum circuit for ML.
 
-**Function Signature:**
+**Signature:**
 ```python
 build_variational_circuit(
     n_qubits: int,
@@ -52,184 +104,284 @@ build_variational_circuit(
 ) -> QuantumCircuit
 ```
 
-**Purpose:** Build parameterized quantum circuit with trainable rotation gates for quantum neural networks.
+**Parameters:**
+- `n_qubits`: Number of qubits
+- `depth`: Circuit depth (number of layers)
+- `parameters`: Trainable rotation parameters
+- `entanglement`: Pattern ('linear', 'circular', 'full')
 
-**Entanglement Patterns:**
-- `linear`: Sequential CNOT chain
-- `circular`: Ring topology with wrap-around
-- `full`: All-to-all connectivity
+**Returns:** Variational quantum circuit
 
----
-
-### build_gradient_circuit()
-
-Builds circuit for quantum gradient computation (NEW in v3.2).
-
-**Function Signature:**
+**Example:**
 ```python
-build_gradient_circuit(
-    base_circuit: QuantumCircuit,
-    parameter_index: int,
-    shift: float = np.pi / 2
-) -> Tuple[QuantumCircuit, QuantumCircuit]
+# 4-qubit, depth-2 variational circuit
+circuit = builder.build_variational_circuit(
+    n_qubits=4,
+    depth=2,
+    parameters=np.random.rand(24),  # 4 qubits × 3 gates × 2 layers
+    entanglement='linear'
+)
 ```
-
-**Purpose:** Create forward and backward shifted circuits for parameter shift rule gradient computation.
-
----
-
-### build_entanglement_circuit()
-
-Creates entangled state for multiple vectors.
-
-**Function Signature:**
-```python
-build_entanglement_circuit(
-    n_qubits: int,
-    entanglement_type: str = 'GHZ',
-    pattern: str = 'linear'
-) -> QuantumCircuit
-```
-
-**Purpose:** Generate entanglement operations between qubits using specified topology.
-
----
-
-### build_tunneling_circuit()
-
-Builds circuit for quantum tunneling search.
-
-**Function Signature:**
-```python
-build_tunneling_circuit(
-    source_state: np.ndarray,
-    barrier_height: float,
-    tunneling_strength: float = 0.5
-) -> QuantumCircuit
-```
-
-**Purpose:** Create quantum circuit that enables tunneling through energy barriers for optimization.
-
----
 
 ### build_measurement_circuit()
 
-Creates measurement in specified basis.
+Adds measurement operations to circuit.
 
-**Function Signature:**
+**Signature:**
 ```python
 build_measurement_circuit(
-    n_qubits: int,
+    circuit: QuantumCircuit,
     basis: str = 'computational',
-    measure_indices: Optional[List[int]] = None
+    measure_qubits: Optional[List[int]] = None
 ) -> QuantumCircuit
 ```
 
-**Purpose:** Add measurement operations in chosen basis (computational, Hadamard, Pauli-X/Y/Z).
+**Parameters:**
+- `circuit`: Quantum circuit to measure
+- `basis`: Measurement basis ('computational', 'hadamard', 'pauli_x/y/z')
+- `measure_qubits`: Specific qubits to measure (all if None)
 
----
+**Returns:** Circuit with measurement gates
+
+**Example:**
+```python
+# Measure all qubits in computational basis
+circuit_with_measurement = builder.build_measurement_circuit(
+    circuit=quantum_circuit,
+    basis='computational'
+)
+```
 
 ### optimize_circuit()
 
-Optimizes circuit for target backend (NEW in v3.2).
+Optimizes circuit for target backend.
 
-**Function Signature:**
+**Signature:**
 ```python
 optimize_circuit(
     circuit: QuantumCircuit,
-    backend_type: str,
-    optimization_level: int = 2
+    backend: str,
+    level: int = 2
 ) -> QuantumCircuit
 ```
 
-**Purpose:** Transpile and optimize circuit for specific quantum hardware native gates.
+**Parameters:**
+- `circuit`: Circuit to optimize
+- `backend`: Target backend ('ionq', 'cirq', 'qiskit', 'mock')
+- `level`: Optimization level (0-3, higher = more aggressive)
 
----
+**Returns:** Optimized quantum circuit
 
-### decompose_to_native_gates()
-
-Decomposes arbitrary gates to native gate set.
-
-**Function Signature:**
+**Example:**
 ```python
-decompose_to_native_gates(
+# Optimize for IonQ hardware
+optimized = builder.optimize_circuit(
+    circuit=raw_circuit,
+    backend='ionq',
+    level=2
+)
+```
+
+### verify_unitarity()
+
+Verifies quantum circuit preserves unitarity.
+
+**Signature:**
+```python
+verify_unitarity(
     circuit: QuantumCircuit,
-    native_gates: List[str]
-) -> QuantumCircuit
+    tolerance: float = 1e-10
+) -> bool
 ```
 
-**Purpose:** Convert circuit to use only gates supported by target hardware.
+**Parameters:**
+- `circuit`: Circuit to verify
+- `tolerance`: Numerical tolerance for unitarity check
 
----
+**Returns:** True if circuit is unitary
 
-### estimate_circuit_depth()
-
-Estimates circuit depth for resource planning (NEW in v3.2).
-
-**Function Signature:**
+**Example:**
 ```python
-estimate_circuit_depth(
-    circuit: QuantumCircuit
-) -> int
+# Verify circuit is valid quantum operation
+is_valid = builder.verify_unitarity(
+    circuit=quantum_circuit,
+    tolerance=1e-10
+)
 ```
 
-**Purpose:** Calculate circuit depth for coherence time and cost estimation.
+## Circuit Patterns
 
----
+### 1. Encoding Circuit
 
-### build_quantum_layer_circuit()
+```
+Input: Classical vector [v₀, v₁, ..., vₙ]
 
-Builds complete quantum layer circuit for ML (NEW in v3.2).
+Circuit:
+┌─────────┐
+│ Prepare │  Initialize |0⟩⊗ⁿ
+└─────────┘
+     │
+┌─────────┐
+│ Encode  │  Apply encoding gates (RY, RZ, etc.)
+└─────────┘
+     │
+   Output: |ψ⟩ = Σᵢ vᵢ|i⟩
+```
 
-**Function Signature:**
+### 2. Variational Circuit
+
+```
+Input: Parameters θ = [θ₀, θ₁, ..., θₘ]
+
+Circuit (per layer):
+┌─────────────┐
+│  Rotations  │  RY(θ), RZ(θ), RX(θ) on each qubit
+└─────────────┘
+       │
+┌─────────────┐
+│ Entanglement│  CNOT gates in pattern (linear/circular/full)
+└─────────────┘
+
+Repeat for 'depth' layers
+```
+
+### 3. Measurement Circuit
+
+```
+┌──────────┐
+│  Basis   │  Optional basis rotation (H, S, etc.)
+│ Rotation │
+└──────────┘
+     │
+┌──────────┐
+│  Measure │  Computational basis measurement
+└──────────┘
+     │
+  Shots × 1000 → Classical bitstrings
+```
+
+## Performance Characteristics
+
+Based on v4.0.0 benchmarks:
+
+| Operation | Time | Qubits | Notes |
+|-----------|------|--------|-------|
+| Build encoding circuit | <1ms | 8 | Amplitude encoding |
+| Build variational circuit | <1ms | 4-8 | Depth 2-4 |
+| Gate operation | ~59μs | - | Average per gate |
+| Circuit verification | <0.5ms | 8 | Unitarity check |
+| Optimization | <5ms | 8 | Level 2 |
+
+## PyTorch Integration
+
+Q-Store v4.0.0 includes `QuantumLayer` for PyTorch:
+
 ```python
-build_quantum_layer_circuit(
-    input_data: np.ndarray,
-    parameters: np.ndarray,
-    n_qubits: int,
-    depth: int,
-    entanglement: str = 'linear'
-) -> QuantumCircuit
+import torch
+from q_store import QuantumLayer, DatabaseConfig
+
+config = DatabaseConfig(quantum_sdk='mock')
+
+# Create quantum layer
+quantum_layer = QuantumLayer(
+    n_qubits=4,
+    depth=2,
+    config=config
+)
+
+# Use in PyTorch model
+class HybridModel(torch.nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.classical = torch.nn.Linear(10, 4)
+        self.quantum = quantum_layer
+        self.output = torch.nn.Linear(4, 2)
+
+    def forward(self, x):
+        x = self.classical(x)
+        x = self.quantum(x)  # Quantum processing
+        x = self.output(x)
+        return x
+
+model = HybridModel()
 ```
 
-**Purpose:** Create full quantum neural network layer combining encoding, variational circuit, and measurement.
+**Training Performance:**
+- 500 samples, 2 epochs, 4 qubits: 19.5 seconds
+- Full gradient computation via parameter shift rule
+- CPU tensors (GPU acceleration pending)
 
----
+## Backend-Specific Optimization
 
-## Circuit Patterns for ML
+### IonQ Backend
+- **Native Gates**: GPi, GPi2, MS (Mølmer-Sørensen)
+- **Connectivity**: All-to-all (fully connected)
+- **Optimization**: Compile to native gates, minimize MS gates
 
-### Variational Layer Structure
+### Mock Backend
+- **Purpose**: Development/testing without API keys
+- **Accuracy**: Random results (~10-20%)
+- **Speed**: Fastest option for development
+- **Usage**: Set `quantum_sdk='mock'`
 
-Each variational layer consists of:
-1. **Rotation Layer**: RY, RZ, RX gates with trainable parameters
-2. **Entanglement Layer**: CNOT gates in specified pattern
-3. **Repeat**: For circuit depth
+### Cirq/Qiskit Backends
+- **Native Gates**: Backend-specific
+- **Connectivity**: Varies by hardware
+- **Optimization**: Automatic transpilation
 
-### Feature Map Circuits
+## Circuit Verification
 
-Quantum feature maps for data encoding:
-- **ZFeatureMap**: Single-qubit rotations
-- **ZZFeatureMap**: Two-qubit interactions
-- **PauliFeatureMap**: Multi-Pauli rotations
+Q-Store performs multiple verification checks:
 
-## Hardware Optimization
+### 1. Unitarity Check
+Verifies U†U = I (quantum operations must be reversible):
+```python
+is_unitary = builder.verify_unitarity(circuit)
+```
 
-### Backend-Specific Optimization
+### 2. Equivalence Validation
+Confirms optimized circuit equals original:
+```python
+is_equivalent = builder.verify_equivalence(
+    original_circuit,
+    optimized_circuit
+)
+```
 
-Circuits are optimized for:
-- **IonQ**: All-to-all connectivity, native GPi/GPi2/MS gates
-- **IBM**: Limited connectivity, native RZ/SX/CNOT gates
-- **Simulators**: No hardware constraints
+### 3. Parameter Count Validation
+Ensures parameter count matches circuit structure:
+```python
+expected_params = n_qubits * 3 * depth
+actual_params = len(parameters)
+assert actual_params == expected_params
+```
 
-### Gate Decomposition
+## Best Practices
 
-Complex gates decomposed to:
-- Single-qubit rotations (RX, RY, RZ)
-- Two-qubit gates (CNOT, CZ)
-- Native hardware gates
+### Choosing Circuit Depth
+- **Depth 2**: Fast, minimal decoherence, lower expressivity
+- **Depth 4**: Balanced (recommended for most use cases)
+- **Depth 6+**: High expressivity, more decoherence, slower
+
+### Encoding Selection
+- **Amplitude**: Dense vectors (768D embeddings) → log₂(768) = 10 qubits
+- **Angle**: Sparse features, direct mapping
+
+### Entanglement Patterns
+- **Linear**: Nearest-neighbor, minimal gates
+- **Circular**: Ring topology, moderate connectivity
+- **Full**: All-to-all, maximum expressivity, most gates
+
+## Limitations in v4.0.0
+
+- **Qubit Range**: Optimized for 4-8 qubits
+- **Mock Mode**: Random accuracy (~10-20%), use for testing only
+- **GPU Support**: Quantum layers return CPU tensors
+- **Circuit Depth**: Deep circuits (>10 layers) require specialized acceleration
 
 ## Next Steps
 
-- Learn about [State Manager](/components/state-manager)
-- See [Tunneling Engine](/components/tunneling-engine)
-- Explore [ML Model Training](/applications/ml-training)
+- Learn about [State Manager](/components/state-manager) for quantum state management
+- Explore [Entanglement Registry](/components/entanglement-registry) for multi-qubit operations
+- See [Quantum Principles](/concepts/quantum-principles) for theoretical foundation
+- Check [IonQ Integration](/ionq/overview) for hardware backend setup

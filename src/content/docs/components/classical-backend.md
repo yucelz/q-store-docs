@@ -1,316 +1,403 @@
 ---
 title: Classical Backend
-description: Integration with classical vector databases and training data storage
+description: Pinecone vector database integration for Q-Store v4.0.0 hybrid architecture
 ---
 
-The **Classical Backend** handles bulk storage, training data management, and model checkpointing using mature vector databases in v3.2.
+The **Classical Backend** provides persistent vector storage using Pinecone vector database, enabling Q-Store v4.0.0's hybrid classical-quantum architecture for scalable quantum-enhanced database operations.
 
-## Supported Backends
+## Overview
 
-- **Pinecone**: Managed vector database (primary for v3.2)
-- **pgvector**: PostgreSQL extension
-- **Qdrant**: Open-source vector database
-- **Redis**: Caching and temporary storage
+In Q-Store v4.0.0, the Classical Backend handles:
+- **Persistent Storage**: Pinecone vector database for classical vectors
+- **Hybrid Architecture**: Classical storage + quantum enhancement
+- **Scalability**: Handle millions of vectors efficiently
+- **Fallback**: Classical operations when quantum unavailable
 
-## Responsibilities
+## Core Architecture
 
-- Store large-scale training datasets
-- Manage model checkpoints and metadata
-- Provide efficient batch data loading
-- Handle embeddings and feature vectors
-- Cache frequently accessed data
-- Support distributed storage for ML training (NEW in v3.2)
+Q-Store v4.0.0 uses Pinecone as the primary storage backend:
+
+```
+┌─────────────────────────────────────────┐
+│         Q-Store v4.0.0 Database         │
+└──────────────┬─────────────┬────────────┘
+               │             │
+       ┌───────┴─────┐  ┌────┴─────────┐
+       │   Quantum   │  │  Classical   │
+       │  Enhancement│  │   Storage    │
+       │  (IonQ/Mock)│  │  (Pinecone)  │
+       └─────────────┘  └──────────────┘
+              │               │
+              └───────┬───────┘
+                      │
+                Vector Operations
+```
+
+## Configuration
+
+### Basic Setup
+
+```python
+from q_store import QuantumDatabase, DatabaseConfig
+
+config = DatabaseConfig(
+    # Classical backend (Pinecone)
+    pinecone_api_key="your-pinecone-key",
+    pinecone_environment="us-east-1",
+    pinecone_index="quantum-vectors",
+
+    # Quantum enhancement (optional)
+    enable_quantum=True,
+    quantum_sdk='ionq',  # or 'mock'
+    ionq_api_key="your-ionq-key"  # if using IonQ
+)
+
+db = QuantumDatabase(config)
+```
+
+### Pinecone Index Setup
+
+Q-Store requires minimum 768-dimensional embeddings:
+
+```python
+import pinecone
+
+# Initialize Pinecone
+pinecone.init(
+    api_key="your-key",
+    environment="us-east-1"
+)
+
+# Create index (if not exists)
+if 'quantum-vectors' not in pinecone.list_indexes():
+    pinecone.create_index(
+        name='quantum-vectors',
+        dimension=768,  # Minimum for Q-Store
+        metric='cosine',
+        pods=1,
+        pod_type='p1.x1'
+    )
+```
 
 ## Key Methods
 
-### store_training_data()
+### insert()
 
-Stores training dataset in classical storage (NEW in v3.2).
+Stores vector with optional quantum enhancement.
 
-**Function Signature:**
+**Signature:**
 ```python
-store_training_data(
-    dataset_id: str,
-    data: np.ndarray,
-    labels: np.ndarray,
-    metadata: Optional[Dict] = None
-) -> None
-```
-
-**Purpose:** Persist training data for ML workflows with associated labels and metadata.
-
----
-
-### load_training_batch()
-
-Loads training batch from storage (NEW in v3.2).
-
-**Function Signature:**
-```python
-load_training_batch(
-    dataset_id: str,
-    batch_size: int,
-    shuffle: bool = True,
-    offset: int = 0
-) -> Tuple[np.ndarray, np.ndarray]
-```
-
-**Purpose:** Efficiently load batches of training data for iterative training.
-
----
-
-### save_checkpoint()
-
-Saves model checkpoint (NEW in v3.2).
-
-**Function Signature:**
-```python
-save_checkpoint(
-    model_id: str,
-    epoch: int,
-    parameters: np.ndarray,
-    metrics: Dict[str, float],
-    metadata: Optional[Dict] = None
-) -> str
-```
-
-**Purpose:** Persist model state for resuming training or inference.
-
----
-
-### load_checkpoint()
-
-Loads model checkpoint (NEW in v3.2).
-
-**Function Signature:**
-```python
-load_checkpoint(
-    checkpoint_path: str
-) -> Dict[str, Any]
-```
-
-**Purpose:** Restore model parameters and training state from checkpoint.
-
----
-
-### create_data_loader()
-
-Creates data loader for training (NEW in v3.2).
-
-**Function Signature:**
-```python
-create_data_loader(
-    dataset_id: str,
-    batch_size: int = 32,
-    shuffle: bool = True,
-    num_workers: int = 4
-) -> DataLoader
-```
-
-**Purpose:** Generate efficient async data loader for training loops.
-
----
-
-### insert_vector()
-
-Inserts single vector with metadata.
-
-**Function Signature:**
-```python
-insert_vector(
+insert(
     id: str,
     vector: np.ndarray,
-    metadata: Optional[Dict] = None
+    metadata: Optional[Dict] = None,
+    contexts: Optional[List[Tuple[str, float]]] = None
 ) -> None
 ```
 
-**Purpose:** Store individual embeddings or feature vectors.
+**Parameters:**
+- `id`: Unique vector ID
+- `vector`: Embedding vector (768D+)
+- `metadata`: Optional metadata
+- `contexts`: Optional superposition contexts (quantum mode)
 
----
-
-### batch_insert()
-
-Inserts multiple vectors efficiently.
-
-**Function Signature:**
+**Example:**
 ```python
-batch_insert(
-    ids: List[str],
-    vectors: List[np.ndarray],
-    metadata: Optional[List[Dict]] = None
-) -> None
+# Classical insert
+db.insert(
+    id='doc_123',
+    vector=embedding_768d,
+    metadata={'title': 'Quantum Computing Basics'}
+)
+
+# Quantum superposition insert
+db.insert(
+    id='doc_456',
+    vector=embedding_768d,
+    contexts=[
+        ('technical', 0.7),
+        ('business', 0.3)
+    ]
+)
 ```
-
-**Purpose:** Bulk insert operation for efficient data ingestion.
-
----
 
 ### query()
 
-Queries for similar vectors.
+Searches for similar vectors.
 
-**Function Signature:**
+**Signature:**
 ```python
 query(
-    query_vector: np.ndarray,
+    vector: np.ndarray,
     top_k: int = 10,
-    filter: Optional[Dict] = None
+    filter: Optional[Dict] = None,
+    context: Optional[str] = None,
+    enable_tunneling: bool = False
 ) -> List[QueryResult]
 ```
 
-**Purpose:** Retrieve nearest neighbors for similarity search.
+**Parameters:**
+- `vector`: Query embedding
+- `top_k`: Number of results
+- `filter`: Metadata filter
+- `context`: Quantum context (if using superposition)
+- `enable_tunneling`: Enable quantum tunneling
 
----
+**Example:**
+```python
+# Classical query
+results = db.query(
+    vector=query_embedding,
+    top_k=10,
+    filter={'category': 'tech'}
+)
 
-### update_vector()
+# Quantum-enhanced query
+results = db.query(
+    vector=query_embedding,
+    top_k=10,
+    context='technical',  # Collapse superposition
+    enable_tunneling=True  # Find globally best matches
+)
+```
+
+### update()
 
 Updates existing vector.
 
-**Function Signature:**
+**Signature:**
 ```python
-update_vector(
+update(
     id: str,
     vector: np.ndarray,
     metadata: Optional[Dict] = None
 ) -> None
 ```
 
-**Purpose:** Modify stored vectors and associated metadata.
-
----
-
-### delete_vector()
-
-Deletes vector by ID.
-
-**Function Signature:**
+**Example:**
 ```python
-delete_vector(
+db.update(
+    id='doc_123',
+    vector=updated_embedding,
+    metadata={'updated_at': '2024-12-29'}
+)
+```
+
+### delete()
+
+Removes vector from database.
+
+**Signature:**
+```python
+delete(
     id: str
 ) -> None
 ```
 
-**Purpose:** Remove vectors from storage.
-
----
-
-### get_statistics()
-
-Returns storage statistics.
-
-**Function Signature:**
+**Example:**
 ```python
-get_statistics() -> Dict[str, Any]
+db.delete('doc_123')
 ```
 
-**Purpose:** Monitor storage usage, dataset sizes, and performance metrics.
+### fetch()
 
----
+Retrieves vector by ID.
 
-## Configuration Examples
-
-### Pinecone Configuration (Recommended for v3.2)
-
+**Signature:**
 ```python
-backend_config = {
-    'type': 'pinecone',
-    'api_key': PINECONE_API_KEY,
-    'environment': 'us-east-1',
-    'index_name': 'quantum-ml-training',
-    'dimension': 768,
-    'metric': 'cosine'
-}
+fetch(
+    id: str
+) -> Optional[Vector]
 ```
 
-### pgvector Configuration
-
+**Example:**
 ```python
-backend_config = {
-    'type': 'pgvector',
-    'host': 'localhost',
-    'port': 5432,
-    'database': 'quantum_db',
-    'user': 'postgres',
-    'password': 'password',
-    'table_name': 'embeddings'
-}
+vector = db.fetch('doc_123')
 ```
 
-### Qdrant Configuration
+## Hybrid Classical-Quantum Operations
+
+### Automatic Fallback
+
+Q-Store automatically falls back to classical when quantum unavailable:
 
 ```python
-backend_config = {
-    'type': 'qdrant',
-    'host': 'localhost',
-    'port': 6333,
-    'collection_name': 'quantum-vectors',
-    'dimension': 768
-}
+# If quantum backend unavailable, uses classical Pinecone
+db = QuantumDatabase(config)
+
+results = db.query(vector, top_k=10)
+# Uses quantum if available, falls back to classical
 ```
 
-### Redis Configuration (Caching)
+### Selective Quantum Enhancement
+
+Enable quantum features selectively:
 
 ```python
-backend_config = {
-    'type': 'redis',
-    'host': 'localhost',
-    'port': 6379,
-    'db': 0,
-    'ttl': 3600  # 1 hour cache
-}
+# Classical insert (fast, no quantum overhead)
+db.insert(id='doc1', vector=v1, enable_quantum=False)
+
+# Quantum insert (with superposition)
+db.insert(
+    id='doc2',
+    vector=v2,
+    contexts=[('tech', 0.7), ('business', 0.3)],
+    enable_quantum=True
+)
 ```
 
-## ML Training Integration (v3.2)
+### Performance Optimization
 
-### Training Data Management
+Use classical for high-volume, quantum for high-value:
 
-Classical backends efficiently manage:
-- Large training datasets (millions of samples)
-- Feature embeddings and labels
-- Training/validation/test splits
-- Data augmentation caches
+```python
+# Bulk insert - use classical
+for i, vector in enumerate(bulk_vectors):
+    db.insert(f'doc_{i}', vector, enable_quantum=False)
 
-### Model Persistence
+# Important query - use quantum
+critical_results = db.query(
+    vector=important_query,
+    enable_tunneling=True,  # Quantum tunneling
+    context='critical'       # Quantum superposition
+)
+```
 
-Checkpoint storage includes:
-- Model parameters (quantum circuit angles)
-- Optimizer states
-- Training metrics and history
-- Architecture configurations
+## Performance Characteristics
 
-### Distributed Training
+| Operation | Classical (Pinecone) | Quantum Enhanced | Notes |
+|-----------|----------------------|------------------|-------|
+| Insert | <10ms | <15ms | +5ms for quantum |
+| Query | ~30ms | ~60-100ms | +30-70ms for quantum |
+| Update | <10ms | <15ms | +5ms for quantum |
+| Delete | <5ms | <5ms | No quantum overhead |
+| Fetch | <5ms | <5ms | No quantum overhead |
 
-Support for distributed ML:
-- Shared dataset access across workers
-- Synchronized checkpoint storage
-- Distributed batch loading
-- Training progress tracking
+## Metadata Filtering
 
-## Performance Optimization
+Pinecone supports metadata filtering:
+
+```python
+# Insert with metadata
+db.insert(
+    id='doc_123',
+    vector=embedding,
+    metadata={
+        'category': 'tech',
+        'year': 2024,
+        'author': 'Alice'
+    }
+)
+
+# Query with filter
+results = db.query(
+    vector=query_embedding,
+    top_k=10,
+    filter={
+        'category': {'$eq': 'tech'},
+        'year': {'$gte': 2020}
+    }
+)
+```
+
+## Best Practices
+
+### Choosing Vector Dimensions
+
+- **768D**: Minimum for Q-Store (BERT embeddings)
+- **1024D**: Better for complex semantics
+- **1536D**: OpenAI embeddings (ada-002)
+- **Higher**: More expensive, ensure Pinecone pod supports it
+
+### Index Configuration
+
+```python
+# Production configuration
+pinecone.create_index(
+    name='quantum-vectors-prod',
+    dimension=768,
+    metric='cosine',
+    pods=2,  # Scale for throughput
+    pod_type='p1.x2',  # Higher performance
+    metadata_config={
+        'indexed': ['category', 'year']  # Index frequently filtered fields
+    }
+)
+```
 
 ### Batch Operations
 
-Use batch operations for efficiency:
-- `batch_insert()` for data ingestion
-- Batch loading for training
-- Parallel query execution
+For efficiency, batch inserts:
 
-### Caching Strategy
+```python
+# Batch insert (more efficient)
+vectors = [(f'doc_{i}', embedding) for i, embedding in enumerate(embeddings)]
+db.batch_insert(vectors, batch_size=100)
+```
 
-Multi-level caching:
-- Redis for hot data
-- Pinecone for persistent storage
-- Local memory cache for active batches
+## Limitations in v4.0.0
 
-### Index Optimization
+- **Pinecone Required**: No alternative classical backends in v4.0
+- **Minimum 768D**: Lower-dimensional vectors not supported
+- **Quantum Overhead**: +30-70ms per quantum operation
+- **Cost**: Both Pinecone and IonQ/quantum costs
 
-Vector index tuning:
-- Dimension reduction where appropriate
-- Metric selection (cosine, euclidean, dot product)
-- Quantization for large-scale storage
+## Monitoring and Debugging
+
+### Check Database Stats
+
+```python
+stats = db.get_stats()
+print(f"Total vectors: {stats['vector_count']}")
+print(f"Index dimension: {stats['dimension']}")
+print(f"Quantum enabled: {stats['quantum_enabled']}")
+```
+
+### Verify Pinecone Connection
+
+```python
+# Test Pinecone connection
+try:
+    db.fetch('test_id')
+    print("Pinecone connection: OK")
+except Exception as e:
+    print(f"Pinecone error: {e}")
+```
+
+### Monitor Quantum Usage
+
+```python
+# Check quantum vs classical usage
+stats = db.get_quantum_stats()
+print(f"Quantum queries: {stats['quantum_queries']}")
+print(f"Classical fallbacks: {stats['classical_fallbacks']}")
+print(f"Quantum success rate: {stats['quantum_success_rate']:.1%}")
+```
+
+## Migration from Other Databases
+
+Q-Store v4.0.0 supports migration from other vector databases:
+
+```python
+# Example: Migrate from existing Pinecone index
+source_index = pinecone.Index('old-index')
+target_db = QuantumDatabase(config)
+
+# Fetch all vectors
+vectors = source_index.fetch(ids=all_ids)
+
+# Insert into Q-Store
+for id, data in vectors.items():
+    target_db.insert(
+        id=id,
+        vector=data['values'],
+        metadata=data.get('metadata')
+    )
+```
 
 ## Next Steps
 
-- See [State Manager](/components/state-manager) for quantum integration
-- Learn about [ML Model Training](/applications/ml-training)
-- Explore [Deployment](/deployment/cloud) options
+- Learn about [State Manager](/components/state-manager) for quantum operations
+- Explore [Entanglement Registry](/components/entanglement-registry) for relationships
+- See [IonQ Integration](/ionq/overview) for quantum backend setup
+- Check [Quick Start](/getting-started/quick-start) for complete examples
