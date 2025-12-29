@@ -28,7 +28,6 @@ export default defineConfig({
                   { label: 'Introduction', slug: 'index' },
                   { label: 'Quick Start', slug: 'getting-started/quick-start' },
                   { label: 'Installation', slug: 'getting-started/installation' },
-                   { label: 'Example Projects', slug: 'getting-started/example-projects' },
               ],
           },
           {

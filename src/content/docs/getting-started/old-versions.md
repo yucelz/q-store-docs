@@ -22,6 +22,12 @@ This page contains historical documentation for retired Q-Store versions. These 
 
 ---
 
+## Example Projects
+
+**These example projects work with q-store version 3.5 and below**
+
+[Example Projects ](/getting-started/example-projects)
+
 ## Q-Store v3.2 (Retired)
 
 :::caution[Retired Version]
