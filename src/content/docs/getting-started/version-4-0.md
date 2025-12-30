@@ -69,29 +69,6 @@ This is not just an update - it's a complete reimagining of how quantum machine 
             └─────────────────────┘
 ```
 
-## 📊 Feature Comparison Matrix
-
-| Feature | TFQ | Q-Store v3.5 | Q-Store v4.0 (Planned) |
-|---------|-----|--------------|------------------------|
-| **Framework Integration** | ✅ TensorFlow | ❌ Custom | ✅ TensorFlow + PyTorch |
-| **Keras API** | ✅ Native | ❌ No | ✅ Yes |
-| **Circuit Framework** | Cirq Only | Cirq + Qiskit | ✅ Unified (all frameworks) |
-| **Distributed Training** | ✅ MultiWorker | ⚠️ Manual | ✅ Standard (TF + PyTorch) |
-| **Kubernetes Support** | ✅ tf-operator | ❌ No | ✅ Both tf-operator + PyTorch |
-| **TensorBoard** | ✅ Native | ⚠️ Custom | ✅ Native |
-| **Gradient Methods** | ✅ Multiple | ⚠️ SPSA only | ✅ Multiple |
-| **IonQ Native Gates** | ❌ No | ✅ Yes | ✅ Yes |
-| **IonQ Hardware** | ⚠️ Via backend | ✅ First-class | ✅ First-class |
-| **GPU Simulation** | ⚠️ Limited | ❌ No | ✅ Yes (Lightning) |
-| **State Vector Sim** | ✅ qsim | ⚠️ Local | ✅ qsim + Lightning |
-| **Database Integration** | ❌ No | ✅ Pinecone | ✅ Pinecone |
-| **Quantum State Mgmt** | ❌ No | ✅ Yes | ✅ Enhanced |
-| **Multi-Backend** | ❌ No | ⚠️ Manual | ✅ Auto-routing |
-| **Cost Optimization** | ❌ No | ⚠️ Basic | ✅ Advanced |
-| **Scale Proven** | ✅ 10K+ CPUs | ❌ Unknown | 🎯 Target |
-
-**Legend**: ✅ Yes, ⚠️ Partial, ❌ No, 🎯 Target for v4.0
-
 ## 🆕 What's New in v4.0
 
 ### 1. Native TensorFlow & PyTorch Integration
