@@ -3,7 +3,7 @@ title: Version 4.0 - The Quantum ML Revolution
 description: Q-Store v4.0 represents a fundamental transformation - bringing industry-standard ML APIs to quantum computing while maintaining our unique hardware optimization advantages.
 ---
 
-:::tip[Production Ready]
+:::note[Production Ready]
 **Q-Store v4.0.0 is now released and production-ready!** Released December 29, 2024 with 11/11 examples passing validation. Install now: `pip install q-store==4.0.0`
 :::
 

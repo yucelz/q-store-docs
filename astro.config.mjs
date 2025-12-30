@@ -33,6 +33,7 @@ export default defineConfig({
           {
               label: 'Core Concepts',
               items: [
+                 { label: 'Q-Store v4.1', slug: 'getting-started/version-4-1' },
                  { label: 'Q-Store v4.0', slug: 'getting-started/version-4-0' },
                   { label: 'Old Versions', slug: 'getting-started/old-versions' },
                   { label: 'Quantum Principles', slug: 'concepts/quantum-principles' },
