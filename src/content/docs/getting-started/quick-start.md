@@ -1,15 +1,28 @@
 ---
 title: Quick Start
-description: Get started with Q-Store v4.0.0 in 5 minutes
+description: Get started with Q-Store v4.1.1 in 5 minutes
 ---
 
-Get up and running with Q-Store v4.0.0 quantum-native database in minutes - no API keys required for development!
+Get up and running with Q-Store v4.1.1 with async quantum execution - no API keys required for development!
+
+:::tip[New in v4.1.1]
+- ⚡ **Async quantum execution**: 10-20× faster than v4.0
+- 🎆 **Quantum-first architecture**: 70% quantum computation
+- 💾 **Zero-blocking storage**: Async Zarr + Parquet
+- 🔧 **Fixed PyTorch integration**: Full autograd support
+:::
 
 ## Installation
 
 ```bash
-# Latest version with v4.0.0 performance improvements
-pip install q-store==4.0.0
+# Latest version with async execution and quantum-first architecture
+pip install q-store==4.1.1
+
+# With async support (recommended)
+pip install q-store[async]==4.1.1
+
+# Full installation (all backends)
+pip install q-store[all]==4.1.1
 ```
 
 **Requirements:** Python 3.11+
@@ -34,18 +47,57 @@ print(result)
 python examples/basic_usage.py
 ```
 
-## Hybrid Quantum-Classical ML
+## Hybrid Quantum-Classical ML (v4.1.1)
+
+### Quantum-First Architecture (NEW!)
+
+```python
+import asyncio
+from q_store.layers import (
+    QuantumFeatureExtractor,
+    QuantumPooling,
+    QuantumReadout
+)
+from q_store.runtime import AsyncQuantumExecutor
+
+# Build quantum-first model (70% quantum!)
+model = Sequential([
+    Flatten(),
+    QuantumFeatureExtractor(n_qubits=8, depth=4, backend='ionq'),
+    QuantumPooling(n_qubits=4),
+    QuantumFeatureExtractor(n_qubits=4, depth=3),
+    QuantumReadout(n_qubits=4, n_classes=10)
+])
+
+# Async training loop (non-blocking!)
+async def train_model():
+    for epoch in range(10):
+        for batch_x, batch_y in train_loader:
+            # Async forward pass (never blocks!)
+            predictions = await model.forward_async(batch_x)
+            
+            loss = criterion(predictions, batch_y)
+            gradients = await model.backward_async(loss)
+            optimizer.step(gradients)
+            
+            print(f"Epoch {epoch}, Loss: {loss.item():.4f}")
+
+# Run async training
+asyncio.run(train_model())
+```
+
+### PyTorch Integration (Fixed in v4.1.1!)
 
 ```python
 import torch
 import torch.nn as nn
-from q_store.ml import QuantumLayer
+from q_store.torch import QuantumLayer
 
 # Build hybrid model
 model = nn.Sequential(
-    nn.Linear(784, 16),           # Classical layer
-    QuantumLayer(n_qubits=4, depth=2),  # Quantum layer
-    nn.Linear(4, 10)              # Classical output
+    nn.Linear(784, 16),
+    QuantumLayer(n_qubits=8, depth=4, backend='ionq'),  # Now with async!
+    nn.Linear(24, 10)  # 8 qubits × 3 bases = 24 features
 )
 
 # Train like any PyTorch model
@@ -55,17 +107,20 @@ criterion = nn.CrossEntropyLoss()
 for epoch in range(10):
     output = model(input_data)
     loss = criterion(output, labels)
-    loss.backward()  # Quantum gradients computed automatically!
+    loss.backward()  # Quantum gradients via SPSA
     optimizer.step()
 ```
 
 **Run it:**
 ```bash
-# Mock mode (instant, free)
+# Mock mode (instant, free, for development)
 python examples/pytorch/fashion_mnist.py --samples 500 --epochs 2
 
-# Real quantum backend (requires API keys)
-python examples/pytorch/fashion_mnist.py --no-mock --samples 100 --epochs 2
+# IonQ Simulator (real API, free, ~38 min for 1K images)
+python examples/pytorch/cats_vs_dogs.py --no-mock --samples 1000 --epochs 5
+
+# Note: Classical GPU training is 183-457× faster for production
+# Use quantum for: research, small datasets, algorithm development
 ```
 
 ## Quantum-Enhanced Database
@@ -74,12 +129,15 @@ python examples/pytorch/fashion_mnist.py --no-mock --samples 100 --epochs 2
 
 ```python
 from q_store import QuantumDatabase, DatabaseConfig
+from q_store.runtime import AsyncQuantumExecutor
 
 # Mock mode - no API keys needed
 config = DatabaseConfig(
     quantum_sdk='mock',  # Use mock quantum backend
     enable_quantum=True,
-    enable_superposition=True
+    enable_superposition=True,
+    max_concurrent=100,  # NEW in v4.1: async execution
+    batch_size=20        # NEW in v4.1: circuit batching
 )
 
 db = QuantumDatabase(config)
@@ -177,6 +235,31 @@ db.insert(
 
 # Cleanup happens automatically
 db.apply_decoherence()
+```
+
+### 6. Zero-Blocking Storage (NEW in v4.1.1!)
+
+Async checkpoints and metrics:
+
+```python
+from q_store.storage import AsyncMetricsLogger, CheckpointManager
+
+# Async metrics (never blocks training!)
+metrics = AsyncMetricsLogger('experiments/run_001/metrics.parquet')
+await metrics.log({
+    'epoch': 1,
+    'loss': 0.342,
+    'circuit_time_ms': 107,
+    'cost_usd': 0.0
+})
+
+# Async checkpoints (compressed Zarr)
+checkpoints = CheckpointManager('experiments/run_001/checkpoints')
+await checkpoints.save(
+    epoch=10,
+    model_state=model.state_dict(),
+    optimizer_state=optimizer.state_dict()
+)
 ```
 
 ## Production Setup (Optional)
@@ -300,49 +383,72 @@ diverse_results = db.tunnel_search(
 print(f"Diverse results: {[r.id for r in diverse_results]}")
 ```
 
-## Performance Characteristics
+## Performance Characteristics (v4.1.1)
 
-| Mode | Accuracy | Speed | Cost | Use Case |
-|------|----------|-------|------|----------|
-| **Mock** | 10-20% | Instant | Free | Development, testing |
-| **IonQ Simulator** | 60-75% | ~100ms | Low | Validation, demos |
-| **IonQ QPU** | 60-75% | ~100ms | High | Production |
+**Real-World Data** (Cats vs Dogs, 1,000 images, 5 epochs):
+
+| Backend | Training Time | Accuracy | Cost | Speedup | Use Case |
+|---------|--------------|----------|------|---------|----------|
+| **NVIDIA H100** | 5s | 60-70% | $0.009 | 457× faster | Production |
+| **NVIDIA A100** | 7.5s | 60-70% | $0.010 | 305× faster | Production |
+| **IonQ Simulator (v4.1)** | 38.1 min | 58.5% | $0 (free!) | Baseline | Research |
+| **IonQ Aria QPU** | ~45-60 min | 60-75% | $1,152 | 0.15× | Research only |
+| **Mock (v4.1)** | Instant | 10-20% | Free | N/A | Development |
+
+**Key Insights**:
+- ✅ v4.1.1 is **10-20× faster** than v4.0 (async execution)
+- ⚠️ Classical GPUs are **183-457× faster** than quantum for large datasets
+- ✅ **Free IonQ simulator** perfect for research and algorithm development
+- ✅ Quantum excels: small datasets (<1K samples), non-convex optimization, research
+- ⚠️ Use classical GPUs for: production, large datasets, time-critical applications
 
 ## Running Examples
 
-### Available Examples
+### Available Examples (v4.1.1)
 
 ```bash
 # Basic quantum circuit
 python examples/basic_usage.py
 
-# PyTorch hybrid model (Fashion MNIST)
-python examples/pytorch/fashion_mnist.py --samples 500 --epochs 2
+# Async PyTorch model (Fashion MNIST)
+python examples/pytorch/fashion_mnist_async.py --samples 500 --epochs 2
 
-# Database operations
-python examples/database_demo.py
+# Real-world benchmark (Cats vs Dogs)
+python examples/pytorch/cats_vs_dogs.py --samples 1000 --epochs 5
 
-# Financial applications
-python examples/financial_demo.py
+# Database operations with async storage
+python examples/database_async_demo.py
 
-# Recommendation system
-python examples/recommendation_demo.py
+# Quantum-first architecture demo
+python examples/quantum_first_demo.py
+
+# Performance comparison (Quantum vs Classical)
+python examples/performance_comparison.py
 ```
 
-### With Real Quantum Backend
+### With Real IonQ Simulator (Free!)
 
 ```bash
-# Set up .env file first with API keys
-python examples/pytorch/fashion_mnist.py --no-mock --samples 100 --epochs 2
+# Set up .env file with IONQ_API_KEY
+python examples/pytorch/cats_vs_dogs.py --no-mock --samples 1000 --epochs 5
+
+# Expected: ~38 minutes (vs 7.5s for GPU)
+# Cost: $0 (simulator is free!)
+# Perfect for research and algorithm development
 ```
 
 ## Tips for Success
 
-1. **Start with Mock Mode**: Develop and test without API keys
-2. **Use Small Qubit Counts**: 4-8 qubits optimal for v4.0.0
-3. **Monitor Costs**: Real quantum operations cost money
-4. **Validate Results**: Compare mock vs. real backend accuracy
-5. **Check Examples**: All 11 examples pass validation tests
+1. **Start with Mock Mode**: Develop and test without API keys (instant, free)
+2. **Use IonQ Simulator for Research**: Free, unlimited experimentation
+3. **Understand Performance**: GPUs are 183-457× faster for production training
+4. **Quantum Use Cases**: Research, small datasets (<1K), algorithm development, non-convex optimization
+5. **Use Async Execution**: Enable async for 10-20× speedup over v4.0
+6. **Optimal Qubit Counts**: 8 qubits recommended for v4.1.1 (was 4-8 in v4.0)
+7. **Monitor Costs**: Real QPU costs $1,152-$4,480 per training run
+8. **Network Latency**: 55% of execution time with cloud IonQ
+9. **Energy Efficiency**: Quantum uses 5-8× less power than GPU (50-80W vs 400W)
+10. **Check Examples**: All examples updated for v4.1.1 async architecture
 
 ## Getting Help
 

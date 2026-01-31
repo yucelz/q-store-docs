@@ -3,17 +3,21 @@ title: Version 4.1 - The Async Quantum Revolution
 description: Q-Store v4.1.0 delivers production-ready async quantum execution and quantum-first architecture, achieving 3-5× speedup over classical GPUs with local quantum chip access.
 ---
 
-:::tip[🎊 New Year 2026 release is coming]
-**Q-Store v4.1.0 launches in 2026** with revolutionary async execution architecture! Built on the solid foundation of v4.0.0's verification, profiling, and visualization capabilities. <Badge text="v4.1.0" variant="success" />
+:::tip[🎊 Released: January 2026]
+**Q-Store v4.1.1 is now available!** Revolutionary async execution architecture with real-world IonQ integration. Built on the solid foundation of v4.0.0's verification, profiling, and visualization capabilities. <Badge text="v4.1.1" variant="success" />
 :::
 
 ## 🎆 The 2026 Quantum Breakthrough
 
 ### From Quantum-Enhanced to Quantum-First
 
-Q-Store v4.1 represents a **fundamental architectural transformation** - moving from quantum as a helper to quantum as the primary compute engine. This is the first quantum ML platform that can beat classical GPUs in production workloads.
+Q-Store v4.1 represents a **fundamental architectural transformation** - moving from quantum as a helper to quantum as the primary compute engine. With async execution and optimized circuit batching, we achieve 10-20× speedup over sequential quantum execution.
 
 **Core Philosophy**: *"Make quantum the primary compute, with minimal classical overhead and zero-blocking async execution."*
+
+:::caution[Performance Reality Check]
+While v4.1 is dramatically faster than v4.0, **classical GPUs (183-457× faster) remain the best choice for production training** of large datasets. Quantum advantages emerge in specific use cases: small datasets, complex feature spaces, and research applications. See the honest performance comparison below.
+:::
 
 **GitHub Discussions**: Share your thoughts on the v4.1 async design
   [![Discussions](https://img.shields.io/badge/GitHub-Discussions-blue?logo=github)](https://github.com/yucelz/q-store/discussions)
@@ -25,11 +29,12 @@ Q-Store v4.1 represents a **fundamental architectural transformation** - moving 
 | **Architecture** | Quantum-enhanced classical | **Quantum-first (70% quantum)** | 🎆 14× more quantum compute |
 | **Execution** | Sequential circuits | **Async parallel (10-20×)** | 🎊 Never blocks on I/O |
 | **Storage** | Blocking I/O | **Async Zarr + Parquet** | 🎁 Zero-blocking writes |
-| **Performance** | Slower than GPU | **3-5× faster than GPU*** | 🎉 Quantum advantage! |
+| **Performance vs v4.0** | Baseline | **10-20× faster** | 🎉 Major improvement! |
+| **Performance vs GPU** | Much slower | **Still 85-183× slower** | ⚠️ GPU wins for speed |
 | **Layers** | Mixed classical/quantum | **Pure quantum pipeline** | ✨ Minimal classical overhead |
 | **PyTorch** | Broken | **Fixed + async support** | 🌟 Production-ready |
 
-***With local quantum chip access (no network latency)*
+**Note:** Real-world test with IonQ Simulator on Cats vs Dogs (1,000 images): 38.1 minutes vs 6-12 seconds for GPU
 
 ### 🎊 Key Innovations (Unique to Q-Store v4.1)
 
@@ -82,20 +87,6 @@ Q-Store v4.1 (Local IonQ):      ~30-45 seconds (3-5× FASTER!) 🎊
 
 | Factor | Cloud IonQ | Local IonQ | Advantage |
 |--------|------------|------------|-----------|
-| **Network latency** | 200ms per batch (65% time) | 0ms | **Eliminated!** |
-| **Circuit execution** | 100ms (33% time) | 100ms (93% time) | Same hardware |
-| **Total per batch** | 307ms | 107ms | **2.9× faster** |
-| **With 15× async** | 20ms effective | 7.1ms effective | **2.8× faster** |
-| **vs GPU (2.7ms)** | 0.7× slower | **2.6× FASTER** | 🏆 **Quantum wins!** |
-
-:::tip[🎆 The Key Insight]
-**Network latency was hiding quantum's potential!** With local quantum chip access:
-- ✅ Training is 3-5× **faster** than classical GPU
-- ✅ Energy consumption is 5-8× **lower** (50-80W vs 400W)
-- ✅ Production-ready performance
-- ✅ Better loss landscape exploration
-:::
-
 ## 🎁 Architecture Highlights
 
 ### Quantum-First Layer Pipeline
@@ -123,17 +114,6 @@ model = Sequential([
 ])
 # Total: 30% classical, 70% quantum ✨
 ```
-
-### 🎆 Performance Breakdown
-
-With v4.1 optimizations on **local quantum chip**:
-
-| Operation | Time | Optimization |
-|-----------|------|--------------|
-| Data loading | 10s | Standard |
-| Quantum circuits | 400s → **15s** | 🎊 Async (5×) + Batch (4×) + Native gates (1.3×) |
-| Classical overhead | 11s | Minimized |
-| **Total** | 346s → **41s** | 🎉 **8.4× faster than v4.0!** |
 
 ## 🌟 New Quantum-First Layers
 
@@ -399,70 +379,76 @@ for epoch in range(10):
 
 ## 🎊 When to Use Q-Store v4.1
 
-### ✅ Excellent Use Cases (NEW in v4.1!)
+### ✅ Excellent Use Cases
 
-#### 1. **Production ML Systems** 🏆 (NEW!)
+#### 1. **Quantum ML Research** 🔬
 
-**With local quantum chip access**:
-- ✅ **3-5× faster than GPU** (30-45s vs 2-3min for Fashion MNIST)
-- ✅ Small-to-medium datasets (<10K samples)
-- ✅ Energy efficient (5-8× less power: 50-80W vs 400W)
-- ✅ Better loss landscape exploration
-- ✅ Production-ready performance
+- Testing quantum ML algorithms and architectures
+- Publishing papers on quantum machine learning
+- Algorithm development with **free IonQ simulator**
+- Exploring quantum advantage in specific domains
+- Benchmarking quantum vs classical approaches
 
-#### 2. **Research Projects**
+#### 2. **Small Dataset Problems** 📊
 
-- Testing quantum ML algorithms
-- Publishing papers on quantum advantage
-- **Now with production-ready performance** (not just research toy!)
+- <1,000 training samples where data is expensive
+- Non-convex optimization landscapes
+- Problems where classical gets stuck in local minima
+- Better loss landscape exploration via quantum tunneling
+- Comparable accuracy (58% vs 60% classical on quick tests)
 
-#### 3. **Small, Complex Problems**
+#### 3. **Educational Applications** 🎓
 
-- <1000 training samples
-- Non-convex optimization
-- Where classical gets stuck in local minima
-- **3-5× faster than classical GPUs**
+- Teaching quantum machine learning concepts
+- University courses on quantum computing
+- Hands-on quantum circuit design
+- Understanding quantum-classical hybrid systems
 
-#### 4. **Edge AI Deployment**
+#### 4. **Algorithm Prototyping** 🧪
 
-- Low power consumption (50-80W vs 400W GPU)
-- Better accuracy on small datasets
-- Faster inference (3-5× speedup)
-- **Quantum advantage in production!**
+- Cost-free experimentation with quantum circuits
+- Testing new quantum layer architectures
+- Validating quantum ML hypotheses
+- Zero cost with IonQ simulator
 
-### ⚠️ Not Optimal For (Yet)
+### ⚠️ Not Recommended For
 
-#### 1. **Very Large Datasets**
+#### 1. **Production Training at Scale** ❌
 
-- >10K training samples
-- Current quantum chips: 25-36 qubits
-- **Better to use classical for massive datasets**
+- Large datasets (>1K samples)
+- Time-critical applications
+- **Use classical GPUs**: 183-457× faster, $0.01 vs $1,152+ cost
+- Real QPU costs: $1,152 (Aria) to $4,480 (Forte) per run
 
-#### 2. **Cloud IonQ Deployment**
+#### 2. **Speed-Critical Applications** ❌
 
-- Network latency: 200ms per batch (65% of total time)
-- Training: 3-4 minutes (0.7-1.0× GPU performance)
-- **Recommendation: Invest in local quantum chip for production**
+- Real-time inference
+- High-throughput services (>100 req/s)
+- **GPU training**: 7.5s vs 38 minutes for 1K images
+- Network latency dominates (55% of execution time)
 
-#### 3. **Real-Time Streaming**
+#### 3. **Cost-Sensitive Deployments** ❌
 
-- Extremely high-throughput services (>1000 req/s)
-- Quantum chip has finite parallelism (10-20 circuits)
+- Budget-constrained projects
+- **GPU cost**: $0.01 per training run
+- **Quantum cost**: $1,152-$4,480 per run on real QPU
+- Simulator is free but 183-457× slower than GPU
 
-## 📊 Honest Performance Table
+## 📊 Honest Performance Table (Real Test Data)
 
-**The Reality: Infrastructure Matters**
+**Test:** Cats vs Dogs (1,000 images, 5 epochs, 180×180×3 RGB)
 
-| Metric | Classical GPU | Cloud IonQ (v4.1) | Local IonQ (v4.1) | Winner |
-|--------|---------------|-------------------|-------------------|--------|
-| **Speed (Fashion MNIST)** | 2-3 min | 3-4 min | **30-45 sec** | 🏆 **Local Quantum** |
-| **Throughput** | High | Medium | **High** | 🏆 **Local Quantum** |
-| **Cost (hardware)** | $10K-15K | $0 upfront | $150K-250K | 🏆 GPU (upfront) |
-| **Cost (ongoing)** | $30K/year | $0-$100/circuit | **$10K/year** | 🏆 **Local Quantum** |
-| **Energy** | 400W | 50-80W | **50-80W** | 🏆 **Quantum** |
-| **Accuracy** | Baseline | ±0-2% | **±0-2%** | 🤝 Comparable |
-| **Exploration** | Local optima | Better | **Better** | 🏆 **Quantum** |
-| **Production Ready** | ✅ Yes | ❌ No | **✅ Yes!** | 🏆 **Local Quantum** |
+| Metric | NVIDIA H100 | NVIDIA A100 | NVIDIA V100 | IonQ Cloud (v4.1.1) | Winner |
+|--------|-------------|-------------|-------------|---------------------|--------|
+| **Training Time** | **5s** | **7.5s** | **12.5s** | 2,288s (38.1 min) | 🏆 **GPU (457×)** |
+| **Time per Epoch** | 1.0s | 1.5s | 2.5s | 457s (7.6 min) | 🏆 **GPU (305×)** |
+| **Samples/Second** | 40 | 26.7 | 16 | **0.35** | 🏆 **GPU (114×)** |
+| **Cost per Run** | $0.009 | $0.010 | $0.012 | $0 (simulator) | 🏆 **Quantum (free)** |
+| **Cost (Real QPU)** | $0.009 | $0.010 | $0.012 | $1,152-$4,480 | 🏆 **GPU (115,200×)** |
+| **Energy** | 700W | 400W | 300W | **50-80W** | 🏆 **Quantum (5×)** |
+| **Accuracy** | 60-70% | 60-70% | 60-70% | **58.5%** | 🤝 **Comparable** |
+| **Loss Exploration** | Local optima | Local optima | Local optima | **Better** | 🏆 **Quantum** |
+| **Production Ready** | ✅ Yes | ✅ Yes | ✅ Yes | ❌ **Research only** | 🏆 **GPU** |
 
 ## 🎆 Performance Optimizations
 
@@ -550,25 +536,25 @@ output = layer.call_sync(inputs)  # Works, but slower
 
 ### Migration Checklist
 
-- [ ] Update to async training loops (optional, but 10-20× faster)
+- [ ] Update to async training loops (optional, but 10-20× faster than v4.0)
 - [ ] Replace classical Dense layers with QuantumFeatureExtractor (14× more quantum)
 - [ ] Switch to AsyncMetricsLogger for storage (zero blocking)
 - [ ] Enable CheckpointManager for Zarr checkpoints (compressed, async)
 - [ ] For PyTorch: Update to fixed QuantumLayer (n_parameters works now!)
-- [ ] Consider local quantum chip investment (3-5× faster than GPU!)
+- [ ] Understand performance: GPU is faster for production, quantum excels at research
 - [ ] Test with async executor (max_concurrent=100 recommended)
 
 ## 🎁 Installation
 
 ```bash
-# Install Q-Store v4.1.0 (2026 release)
-pip install q-store==4.1.0
+# Install Q-Store v4.1.1 (January 2026)
+pip install q-store==4.1.1
 
 # With async support
-pip install q-store[async]==4.1.0
+pip install q-store[async]==4.1.1
 
 # Full installation (all backends)
-pip install q-store[all]==4.1.0
+pip install q-store[all]==4.1.1
 
 # Development installation
 git clone https://github.com/yucelz/q-store
@@ -626,15 +612,26 @@ async def train_quantum_model():
         if epoch % 10 == 0:
             await checkpoints.save(epoch, model.state_dict())
 
-    print("✅ Training complete! 3-5× faster than classical GPU 🎊")
+    print("✅ Training complete! 10-20× faster than v4.0 🎊")
+    print("Note: Classical GPUs are still 183-457× faster for large-scale training")
 
 # Run async training
 asyncio.run(train_quantum_model())
 ```
 
+## 📈 Real Performance Report
 
-**Ready for production quantum ML?** ⭐ Star us on [GitHub](https://github.com/yucelz/q-store) and join the 2026 quantum revolution! 🎊
+For detailed performance analysis including:
+- Real-world benchmark results (Cats vs Dogs dataset)
+- Network latency analysis (55% overhead)
+- Cost comparison (GPU vs QPU: $0.01 vs $1,152)
+- Bottleneck identification and optimization recommendations
+- When quantum makes sense vs when to use classical
 
-:::tip[🎆 Join the Beta Program]
-Early access to Q-Store v4.1.0 beta available now! Contact us to join the beta testing program and help shape the future of quantum machine learning.
+See the full **[Q-Store v4.1.1 Performance Report](/advanced/ml-training-performance)**
+
+**Ready to explore quantum ML?** ⭐ Star us on [GitHub](https://github.com/yucelz/q-store) and join the quantum research community! 🎊
+
+:::tip[🎆 Now Available]
+Q-Store v4.1.1 is available on PyPI! Perfect for quantum ML research, algorithm development, and educational applications. Free IonQ simulator access for unlimited experimentation.
 :::
